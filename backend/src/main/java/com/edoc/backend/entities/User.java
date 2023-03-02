@@ -38,7 +38,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name="user")
+@Table(name="users")
 @Data
 @Builder
 @Getter
@@ -52,7 +52,7 @@ public class User implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	@Column(name = "user_id")
-	private Integer id;
+	private Long id;
 	
 	@Column(name="first_name")
 	@NotBlank(message="Name can not be Empty")
@@ -119,7 +119,9 @@ public class User implements Serializable {
 	@Enumerated(EnumType.STRING)
 	private Role role;
 	
-	// mapping to be done
+	/*
+	 * mappings
+	 */
 	@ManyToOne
 	@JoinColumn(name="school_dise_code")
 	private School school;
@@ -129,5 +131,8 @@ public class User implements Serializable {
 	
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
 	private Set<Admission> admissionList;
+
+	@OneToOne(mappedBy = "user")
+	private Transfer transferRequest;
 	
 }

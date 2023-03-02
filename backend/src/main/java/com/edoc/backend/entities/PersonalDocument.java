@@ -30,9 +30,6 @@ import lombok.Setter;
 @AllArgsConstructor
 public class PersonalDocument implements Serializable {
 	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -3285421130028260561L;
 
 	@Id	

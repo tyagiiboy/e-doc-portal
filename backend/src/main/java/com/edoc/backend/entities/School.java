@@ -83,7 +83,10 @@ public class School implements Serializable{
 	@Column(name="register_date")
 	@Temporal(TemporalType.DATE)
 	private Date registerDate;
-	
+
+	/*
+	 * Mappings --> jpa
+	 */
 	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "school")
 	private Set<User> userList;
 	
@@ -92,5 +95,8 @@ public class School implements Serializable{
 	
 	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "school")
 	private Set<Admission> admissionList;
+
+	@OneToMany(mappedBy = "respondant", cascade = CascadeType.ALL, orphanRemoval = true)
+	private Set<Transfer> pendingTransfers;
 	
 }
