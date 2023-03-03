@@ -2,6 +2,7 @@ package com.edoc.backend.entities;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -129,7 +130,7 @@ public class User implements Serializable {
 	private PersonalDocument presonalDocument;
 	
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-	private Set<Admission> admissionList;
+	private Set<Admission> admissionList = new HashSet<>();
 
 	@OneToOne(mappedBy = "user")
 	private Transfer transferRequest;
