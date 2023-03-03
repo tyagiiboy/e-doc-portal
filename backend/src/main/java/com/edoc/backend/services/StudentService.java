@@ -6,26 +6,25 @@ import com.edoc.backend.repositories.AdmissionRepository;
 import com.edoc.backend.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
-public class StudentService{
-    @Autowired
-    private UserRepository userRepository;
+public class StudentService {
+  @Autowired
+  private UserRepository userRepository;
 
-    @Autowired
-    private AdmissionRepository admissionRepository;
+  @Autowired
+  private AdmissionRepository admissionRepository;
 
-    public StudentDto getStudentById(long id){
-        User student = userRepository.getReferenceById(id);
-        return StudentDto.builder()
-                .email(student.getEmail())
-                .role(student.getRole())
-                .firstName(student.getFirstName())
-                .lastName(student.getLastName())
-                .username(student.getUsername())
-                .schoolClass(admissionRepository
-                        .getLatestAdmissionDetailsById(id)
-                        .getSchoolClass())
-                .build();
-    }
+  public StudentDto getStudentById(long id) {
+    User student = userRepository.getReferenceById(id);
+    return StudentDto.builder()
+        .id(student.getId())
+        .email(student.getEmail())
+        .firstName(student.getFirstName())
+        .lastName(student.getLastName())
+        .schoolClass(admissionRepository
+            .getLatestAdmissionDetailsById(id)
+            .getSchoolClass())
+        .build();
+  }
 
 
 }

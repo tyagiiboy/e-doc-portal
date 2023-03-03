@@ -23,9 +23,4 @@ public class AdminController {
         return ResponseEntity.ok(adminService.countOfSchools());
     }
 
-    @GetMapping("/schools")
-    public ResponseEntity<?> getSchoolList(){
-        return ResponseEntity.ok(adminService.getSchoolList());
-    }
-
 }
