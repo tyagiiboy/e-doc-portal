@@ -4,7 +4,6 @@ import com.edoc.backend.dto.SchoolDto;
 import com.edoc.backend.entities.Admission;
 import com.edoc.backend.entities.School;
 import com.edoc.backend.entities.User;
-import com.edoc.backend.enums.Role;
 import com.edoc.backend.repositories.SchoolRepository;
 import com.edoc.backend.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;

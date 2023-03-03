@@ -1,14 +1,12 @@
 package com.edoc.backend.services;
 
 import com.edoc.backend.dto.ResponseMessage;
-import com.edoc.backend.dto.SchoolDto;
 import com.edoc.backend.dto.UserDto;
 import com.edoc.backend.entities.School;
 import com.edoc.backend.entities.User;
 import com.edoc.backend.repositories.SchoolRepository;
 import com.edoc.backend.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -59,6 +57,13 @@ public class AdminService {
     public List<School> getSchoolList(){
         List<School> schools = schoolRepository.findAll();
         return schools;
+    }
+
+    public School unRegisterSchoolByDiseCode(Long diseCode) {
+        School school = schoolRepository.findById(diseCode).orElseThrow();
+        school.setAuthorizationStatus(false);
+        schoolRepository.save(school);
+        return school;
     }
 
 }
