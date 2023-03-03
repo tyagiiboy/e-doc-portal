@@ -63,23 +63,22 @@ public class User implements Serializable {
 	@Length(max = 20, message = "Invalid last name!!!!!!")
 	private String lastName;
 	
-	@NotBlank(message="Gender can not be Empty")
-	@Length(max=12)
-	private String gender;
+//	@NotBlank(message="Gender can not be Empty")
+	private Character gender;
 	
-	@NotBlank(message="Date of Birth can not be Empty")
+//	@NotBlank(message="Date of Birth can not be Empty")
 	@Column(name="date_of_birth")
 	@Temporal(TemporalType.DATE)
 	private Date dateOfBirth;
 	
-	@Length(min = 12, max = 12, message = "Invalid Aadhar Number!!!!!!")
-	@NotBlank(message="AadharNumber can not be Empty")
+//	@Length(min = 12, max = 12, message = "Invalid Aadhar Number!!!!!!")
+//	@NotBlank(message="AadharNumber can not be Empty")
 	private Long aadharNumber;
 	
 	@Email(message="invalid email format!!!!!!!!")
 	private String email;
 	
-	@NotBlank(message="Date of Joining can not be Empty")
+//	@NotBlank(message="Date of Joining can not be Empty")
 	@Column(name="date_of_registration")
 	@CreationTimestamp
 	private Date dateOfRegistration;
@@ -101,18 +100,18 @@ public class User implements Serializable {
 	@Length(max = 20)
 	private String motherName;
 	
-	@NotBlank(message="Category can not be Empty")
+//	@NotBlank(message="Category can not be Empty")
 	@Enumerated(EnumType.STRING)
 	private Category category;
 	
 	@Column(name="account_number")
-	@Length(min=8,max = 15, message = "Invalid Account Number!!!!!!")
+//	@Length(min=8,max = 15, message = "Invalid Account Number!!!!!!")
 	private Long accoutNumber;
 	
 	@Length(min=10, max=100)
 	private String address;
 	
-	@Length(min=10, max=10, message="Invalid Contact Number!!!!!!!")
+//	@Length(min=10, max=10, message="Invalid Contact Number!!!!!!!")
 	@Column(name="contact_no")
 	private Long contactNo;
 	

@@ -35,7 +35,7 @@ public class PersonalDocument implements Serializable {
 	@Id	
 	@Column(name = "document_id")
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
-	private int documentId;
+	private Integer documentId;
 	
 	@Column(name="aadharcard_link", columnDefinition = "text")
 	private String aadharNummber;

@@ -40,7 +40,7 @@ public class School implements Serializable{
 
 	@Id
 	@Column(name="dise_code", nullable = false)
-	@Length(min=10, max=15, message="Invalid Dise Code!")
+//	@Length(min=10, max=15, message="Invalid Dise Code!")
 	private Long diseCode;
 	
 	@NotBlank(message="Name can not be Empty")
@@ -51,7 +51,7 @@ public class School implements Serializable{
 	@Length(max = 50, message = "Invalid name!")
 	private String affiliation;
 	
-	@NotBlank(message="Established Date can not be Empty")
+
 	@Column(name="established_date")
 	@Temporal(TemporalType.DATE)
 	private Date establishedDate;
@@ -65,11 +65,11 @@ public class School implements Serializable{
 	@Column(name="co_Ed")
 	private Boolean coEd;
 	
-	@Length(min=10, max=10, message="Invalid Contact Number!")
+
 	@Column(name="contact_no1")
 	private Long contact1;
 	
-	@Length(min=10, max=10, message="Invalid Contact Number!")
+
 	@Column(name="contact_no2")
 	private Long contact2;
 	
@@ -79,7 +79,7 @@ public class School implements Serializable{
 	@Column(columnDefinition="tinyint(1) default 1")
 	private Boolean authorizationStatus;
 	
-	@NotBlank(message="Register Date can not be Empty")
+
 	@Column(name="register_date")
 	@Temporal(TemporalType.DATE)
 	private Date registerDate;
