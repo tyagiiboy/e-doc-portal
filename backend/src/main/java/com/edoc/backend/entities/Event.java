@@ -40,7 +40,7 @@ public class Event implements Serializable {
 	@Id
 	@Column(name = "event_id")
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
-	private Integer eventId;
+	private Long eventId;
 
 	@Column(name = "event_name")
 	private String eventName;
