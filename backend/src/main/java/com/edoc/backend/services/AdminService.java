@@ -108,11 +108,4 @@ public class AdminService {
     return events;
   }
 
-  public School unRegisterSchoolByDiseCode(Long diseCode) {
-    School school = schoolRepository.findById(diseCode).orElseThrow();
-    school.setAuthorizationStatus(false);
-    schoolRepository.save(school);
-    return school;
-  }
-
 }

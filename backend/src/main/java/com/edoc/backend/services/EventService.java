@@ -45,10 +45,4 @@ public class EventService {
         return users;
     }
 
-
-
-
 }
-
-
-

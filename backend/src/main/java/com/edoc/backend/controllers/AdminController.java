@@ -13,11 +13,6 @@ public class AdminController {
     @Autowired
     private SchoolService adminService;
 
-    @GetMapping("/profile/{id}")
-    public @ResponseBody UserDto getProfileById(@PathVariable long id) {
-        return adminService.retrieveUserById(id);
-    }
-
     @GetMapping("/stats")
     public ResponseEntity<?> getStats() {
         return ResponseEntity.ok(adminService.countOfSchools());
