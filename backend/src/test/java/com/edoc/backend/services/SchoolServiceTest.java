@@ -16,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class SchoolServiceTest {
 
     @Autowired
-    private SchoolService service;
+    private ManagementService service;
 
     @Test
     public void createSchool() {

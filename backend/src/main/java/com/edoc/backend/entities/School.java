@@ -17,6 +17,7 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.NotBlank;
 
 import com.edoc.backend.enums.Level;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.validator.constraints.Length;
 
 import lombok.AllArgsConstructor;
@@ -78,11 +79,17 @@ public class School implements Serializable{
 	
 	@Column(columnDefinition="tinyint(1) default 1")
 	private Boolean authorizationStatus;
-	
 
 	@Column(name="register_date")
 	@Temporal(TemporalType.DATE)
 	private Date registerDate;
+
+	@Length(min = 5, max = 20)
+	private String username;
+
+	@JsonProperty(access= JsonProperty.Access.WRITE_ONLY)
+	@Length(min = 8, max = 20)
+	private String password;
 
 	/*
 	 * Mappings --> jpa

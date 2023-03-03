@@ -13,7 +13,7 @@ import java.sql.Date;
 @SpringBootTest
 class AdminServiceTest {
     @Autowired
-    AdminService service;
+    SchoolService service;
 
     @Test
     public void addUserTest() {

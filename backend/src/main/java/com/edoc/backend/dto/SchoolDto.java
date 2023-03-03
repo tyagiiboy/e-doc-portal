@@ -16,7 +16,7 @@ public class SchoolDto {
     private Long diseCode;
     private String name;
     private Level level;
-    private Long contactNo;
-    private Boolean coEd;
+    private boolean authorizationStatus;
+    private boolean coEd;
 
 }

@@ -1,7 +1,7 @@
 package com.edoc.backend.services;
 
-import com.edoc.backend.dto.SchoolDto;
-import com.edoc.backend.entities.Admission;
+import com.edoc.backend.dto.ResponseMessage;
+import com.edoc.backend.dto.UserDto;
 import com.edoc.backend.entities.School;
 import com.edoc.backend.entities.User;
 import com.edoc.backend.repositories.SchoolRepository;
@@ -9,33 +9,49 @@ import com.edoc.backend.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+import java.util.List;
+
 @Service
+@Transactional
 public class SchoolService {
-    @Autowired
-    private SchoolRepository schoolRepository;
 
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private SchoolRepository schoolRepository;
 
-    public SchoolDto createSchool(School school) {
-        School school1 = schoolRepository.save(school);
-        return SchoolDto.builder()
-                .diseCode(school1.getDiseCode())
-                .coEd(school1.getCoEd())
-                .level(school1.getLevel())
-                .name(school.getName())
-                .contactNo(school.getContact1())
+    public UserDto createAdmin(User user) {
+        User save = userRepository.save(user);
+        return UserDto.builder()
+                .id(user.getId())
+                .firstName(user.getFirstName())
+                .lastName(user.getLastName())
+                .email(user.getEmail())
+                .role(user.getRole())
+                .disecode(user.getSchool().getDiseCode())
+                .username(user.getUsername())
                 .build();
     }
 
-    public void registerStudent(User user, Admission admission, long diseCode) {
-        School school = schoolRepository.findById(diseCode).orElseThrow();
-        school.getAdmissionList().add(admission);
-        school.getUserList().add(user);
-        admission.setSchool(school);
-        admission.setUser(user);
-        user.setSchool(school);
-        user.getAdmissionList().add(admission);
-        schoolRepository.save(school);
+    public ResponseMessage countOfSchools() {
+        return ResponseMessage.builder()
+                .message("Stats")
+                .obj(schoolRepository.count())
+                .build();
     }
+
+    public UserDto retrieveUserById(long id) {
+        User user = userRepository.findById(id).orElseThrow();
+        return UserDto.builder()
+                .role(user.getRole())
+                .disecode(user.getSchool().getDiseCode())
+                .id(user.getId())
+                .username(user.getUsername())
+                .email(user.getEmail())
+                .lastName(user.getLastName())
+                .firstName(user.getFirstName())
+                .build();
+    }
+
 }
