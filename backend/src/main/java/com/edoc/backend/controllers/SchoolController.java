@@ -14,7 +14,8 @@ import java.util.List;
 @RequestMapping("/school")
 public class SchoolController {
 
-  @Autowired private SchoolService schoolService;
+  @Autowired
+  private SchoolService schoolService;
 
   @GetMapping("/all")
   public ResponseEntity<?> getSchools() {

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/event")
 public class EventController {
+
   @Autowired
   EventService eventService;
 
@@ -28,21 +29,25 @@ public class EventController {
   }
 
   @PostMapping("/{eventid}/{id}")
-  public ResponseEntity<?> enrollEvent(@PathVariable Long eventid,@PathVariable Long id){
-    eventService.addParticipant(eventid,id);
+  public ResponseEntity<?> enrollEvent(@PathVariable Long eventid, @PathVariable Long id) {
+    eventService.addParticipant(eventid, id);
     return ResponseEntity.ok().build();
   }
 
   @GetMapping("/{id}")
-  public ResponseEntity<?> getEnrolledEvents(@PathVariable Long id){
+  public ResponseEntity<?> getEnrolledEvents(@PathVariable Long id) {
     return ResponseEntity.ok((eventService.getParticipants(id)));
   }
 
+  /*
+   * This receives an event id and a user id
+   * adds an event to the enrolled events list for the
+   * particular user.
+   */
   @PostMapping("/{eventid}/{id}")
-  public ResponseEntity<?> unenrollEvent(@PathVariable Long eventid,@PathVariable Long id){
-    eventService.addParticipant(eventid,id);
+  public ResponseEntity<?> unenrollEvent(@PathVariable Long eventid, @PathVariable Long id) {
+    eventService.addParticipant(eventid, id);
     return ResponseEntity.ok().build();
   }
-
 
 }

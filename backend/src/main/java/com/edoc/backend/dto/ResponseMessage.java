@@ -10,7 +10,7 @@ import org.springframework.http.HttpStatus;
 @Builder
 public class ResponseMessage {
 
-    private String message;
-    private Object obj;
+  private String message;
+  private Object obj;
 
 }
