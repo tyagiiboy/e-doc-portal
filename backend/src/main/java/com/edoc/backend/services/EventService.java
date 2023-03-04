@@ -94,5 +94,6 @@ public class EventService {
 
     admission.getParticipations().add(event);
     event.getParticipants().add(admission);
+    eventRepository.save(event);
   }
 }
