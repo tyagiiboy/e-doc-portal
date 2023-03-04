@@ -1,6 +1,5 @@
 package com.edoc.backend.controllers;
 
-import com.edoc.backend.repositories.EventRepository;
 import com.edoc.backend.services.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -28,6 +27,11 @@ public class EventController {
     return ResponseEntity.ok(eventService.deleteEventById(id));
   }
 
+  /*
+   * This receives an event id and a user id
+   * adds an event to the enrolled events list for the
+   * particular user.
+   */
   @PostMapping("/{eventid}/{id}")
   public ResponseEntity<?> enrollEvent(@PathVariable Long eventid, @PathVariable Long id) {
     eventService.addParticipant(eventid, id);
@@ -39,11 +43,6 @@ public class EventController {
     return ResponseEntity.ok((eventService.getParticipants(id)));
   }
 
-  /*
-   * This receives an event id and a user id
-   * adds an event to the enrolled events list for the
-   * particular user.
-   */
   @PostMapping("/{eventid}/{id}")
   public ResponseEntity<?> unenrollEvent(@PathVariable Long eventid, @PathVariable Long id) {
     eventService.addParticipant(eventid, id);
