@@ -10,8 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -46,7 +46,7 @@ public class SchoolService {
     return schools;
   }
 
-  public SchoolDto unRegisterSchoolByDiseCode(Long diseCode) {
+  public SchoolDto unAuthorizeByDiseCode(Long diseCode) {
     School school = schoolRepository.findById(diseCode).orElseThrow();
     school.setAuthorizationStatus(false);
     schoolRepository.save(school);
@@ -63,4 +63,30 @@ public class SchoolService {
     return mapper.map(schoolRepository.findById(diseCode), SchoolDto.class);
   }
 
+  public List<SchoolDto> setAuthorization(List<SchoolDto> schools, boolean status) {
+    Set<SchoolDto> set = new HashSet<>(schools);
+    List<School> all = schoolRepository.findAll();
+
+    all = all.stream()
+        .filter(school -> set.contains(mapper.map(school, SchoolDto.class)))
+        .collect(Collectors.toList());
+    all.forEach(school -> school.setAuthorizationStatus(status));
+
+    schoolRepository.saveAll(all);
+
+    return schools;
+  }
+
 }
+
+
+
+
+
+
+
+
+
+
+
+

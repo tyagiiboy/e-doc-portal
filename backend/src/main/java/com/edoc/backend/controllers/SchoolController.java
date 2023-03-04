@@ -1,16 +1,19 @@
 package com.edoc.backend.controllers;
 
+import com.edoc.backend.dto.ResponseMessage;
+import com.edoc.backend.dto.SchoolDto;
 import com.edoc.backend.services.SchoolService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/school")
 public class SchoolController {
+
   @Autowired private SchoolService schoolService;
 
   @GetMapping("/all")
@@ -27,4 +30,13 @@ public class SchoolController {
   public ResponseEntity<?> schoolDetailsByDiseCode(@PathVariable long id) {
     return ResponseEntity.ok(schoolService.getSchoolByDiseCode(id));
   }
+
+  @GetMapping("/unauthorize")
+  public ResponseEntity<?> unAuthorizeSchools(@RequestBody List<Long> schools) {
+    List<SchoolDto> schoool = schoolService.getSchools();
+    if (schoolService.setAuthorization(schoool, false) != null)
+      return ResponseEntity.accepted().build();
+    return ResponseEntity.status(HttpStatus.valueOf(500)).build();
+  }
+
 }

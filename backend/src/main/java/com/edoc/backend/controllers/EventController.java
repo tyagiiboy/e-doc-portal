@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/event")
 public class EventController {
+
   @Autowired
   EventService eventService;
 
@@ -29,4 +30,5 @@ public class EventController {
   public ResponseEntity<?> revokeEvent(@PathVariable long id) {
     return ResponseEntity.ok(eventService.deleteEventById(id));
   }
+
 }

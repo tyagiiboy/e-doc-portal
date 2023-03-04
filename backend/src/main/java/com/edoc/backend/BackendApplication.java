@@ -19,4 +19,5 @@ public class BackendApplication {
 		modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
 		return modelMapper;
 	}
+
 }
