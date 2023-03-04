@@ -25,4 +25,10 @@ public class UserDto {
 
     private Long disecode;
 
+    private Long contactNo;
+
+    private String address;
+
+    private Long accoutNumber;
+
 }

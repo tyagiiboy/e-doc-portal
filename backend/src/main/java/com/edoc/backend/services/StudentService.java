@@ -2,9 +2,12 @@ package com.edoc.backend.services;
 
 import com.edoc.backend.dto.SchoolDto;
 import com.edoc.backend.dto.StudentDto;
+import com.edoc.backend.entities.Admission;
+import com.edoc.backend.entities.School;
 import com.edoc.backend.entities.User;
 import com.edoc.backend.enums.Role;
 import com.edoc.backend.repositories.AdmissionRepository;
+import com.edoc.backend.repositories.SchoolRepository;
 import com.edoc.backend.repositories.UserRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +27,8 @@ public class StudentService {
   @Autowired
   private AdmissionRepository admissionRepository;
 
+  @Autowired
+  private SchoolRepository schoolRepository;
   public StudentDto getStudentById(long id) {
     User student = userRepository.getReferenceById(id);
     StudentDto studentDto = mapper.map(student, StudentDto.class);
@@ -55,5 +60,7 @@ public class StudentService {
     userRepository.findByIdAndRole(id, Role.STUDENT).orElseThrow();
     return true;
   }
+
+
 
 }
