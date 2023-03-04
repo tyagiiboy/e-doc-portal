@@ -11,5 +11,5 @@ public interface AdmissionRepository extends JpaRepository<Admission, Long> {
           "WHERE a.user.id = ?1 " +
           "ORDER BY a.admissionId DESC"
   )
-  Admission nRecordsOfAdmissionDetailsById(long id);
+  Admission getAdmissionHistoryOfUserId(long id);
 }

@@ -59,4 +59,8 @@ public class SchoolService {
     return mapper.map(schoolRepository.save(school), SchoolDto.class);
   }
 
+  public SchoolDto getSchoolByDiseCode(long diseCode) {
+    return mapper.map(schoolRepository.findById(diseCode), SchoolDto.class);
+  }
+
 }
