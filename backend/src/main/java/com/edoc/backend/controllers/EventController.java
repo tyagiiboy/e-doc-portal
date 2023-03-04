@@ -4,15 +4,11 @@ import com.edoc.backend.repositories.EventRepository;
 import com.edoc.backend.services.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/event")
 public class EventController {
-
   @Autowired
   EventService eventService;
 
@@ -30,5 +26,23 @@ public class EventController {
   public ResponseEntity<?> revokeEvent(@PathVariable long id) {
     return ResponseEntity.ok(eventService.deleteEventById(id));
   }
+
+  @PostMapping("/{eventid}/{id}")
+  public ResponseEntity<?> enrollEvent(@PathVariable Long eventid,@PathVariable Long id){
+    eventService.addParticipant(eventid,id);
+    return ResponseEntity.ok().build();
+  }
+
+  @GetMapping("/{id}")
+  public ResponseEntity<?> getEnrolledEvents(@PathVariable Long id){
+    return ResponseEntity.ok((eventService.getParticipants(id)));
+  }
+
+  @PostMapping("/{eventid}/{id}")
+  public ResponseEntity<?> unenrollEvent(@PathVariable Long eventid,@PathVariable Long id){
+    eventService.addParticipant(eventid,id);
+    return ResponseEntity.ok().build();
+  }
+
 
 }
