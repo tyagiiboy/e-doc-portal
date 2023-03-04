@@ -19,7 +19,7 @@ public class SchoolService {
 
   @Autowired
   private UserRepository userRepository;
-  @Autowired
+  @Autowired(required = true)
   private ModelMapper mapper;
   @Autowired
   private SchoolRepository schoolRepository;
