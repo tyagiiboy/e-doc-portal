@@ -53,4 +53,10 @@ public class SchoolService {
     return mapper.map(school, SchoolDto.class);
   }
 
+  public SchoolDto createSchool(School school) {
+    schoolRepository.findById(school.getDiseCode());
+    school.setAuthorizationStatus(false);
+    return mapper.map(schoolRepository.save(school), SchoolDto.class);
+  }
+
 }

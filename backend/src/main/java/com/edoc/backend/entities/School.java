@@ -9,6 +9,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -34,7 +35,6 @@ public class School implements Serializable {
   @Length(max = 50, message = "Invalid name!")
   private String affiliation;
 
-
   @Column(name = "established_date")
   @Temporal(TemporalType.DATE)
   private Date establishedDate;
@@ -48,10 +48,8 @@ public class School implements Serializable {
   @Column(name = "co_Ed")
   private Boolean coEd;
 
-
   @Column(name = "contact_no1")
   private Long contact1;
-
 
   @Column(name = "contact_no2")
   private Long contact2;
@@ -78,15 +76,15 @@ public class School implements Serializable {
    * Mappings --> jpa
    */
   @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "school")
-  private Set<User> userList;
+  private Set<User> userList = new HashSet<>();
 
   @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "organizer")
-  private Set<Event> eventList;
+  private Set<Event> eventList = new HashSet<>();
 
   @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "school")
-  private Set<Admission> admissionList;
+  private Set<Admission> admissionList = new HashSet<>();
 
   @OneToMany(mappedBy = "respondant", cascade = CascadeType.ALL, orphanRemoval = true)
-  private Set<Transfer> pendingTransfers;
+  private Set<Transfer> pendingTransfers = new HashSet<>();
 
 }

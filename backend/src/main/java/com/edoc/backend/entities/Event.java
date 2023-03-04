@@ -9,7 +9,8 @@ import org.hibernate.annotations.CreationTimestamp;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name="events")
@@ -49,7 +50,7 @@ public class Event implements Serializable {
 	private Date announcementDate;
 
 	@ManyToMany(mappedBy = "participations")
-	private List<Admission> participants;
+	private Set<Admission> participants = new HashSet<>();
 
 	@ManyToOne
 	@JoinColumn(name = "school_id")
