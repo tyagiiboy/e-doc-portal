@@ -1,6 +1,10 @@
 package com.edoc.backend.controllers;
 
+import com.edoc.backend.dto.SchoolDto;
+import com.edoc.backend.entities.Event;
+import com.edoc.backend.entities.School;
 import com.edoc.backend.services.EventService;
+import com.edoc.backend.services.SchoolService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -10,7 +14,9 @@ import org.springframework.web.bind.annotation.*;
 public class EventController {
 
   @Autowired
-  EventService eventService;
+  private EventService eventService;
+  @Autowired
+  private SchoolService schoolService;
 
   @GetMapping("/all")
   public ResponseEntity<?> getAllEvents() {
@@ -22,7 +28,7 @@ public class EventController {
     return ResponseEntity.ok(eventService.getEventById(id));
   }
 
-  @GetMapping("/revoke/{id}")
+  @DeleteMapping("/delete/{id}")
   public ResponseEntity<?> revokeEvent(@PathVariable long id) {
     return ResponseEntity.ok(eventService.deleteEventById(id));
   }
@@ -32,9 +38,9 @@ public class EventController {
    * adds an event to the enrolled events list for the
    * particular user.
    */
-  @PostMapping("/{eventid}/{id}")
-  public ResponseEntity<?> enrollEvent(@PathVariable Long eventid, @PathVariable Long id) {
-    eventService.addParticipant(eventid, id);
+  @PostMapping("/{eventid}/{userId}")
+  public ResponseEntity<?> enrollEvent(@PathVariable Long eventid, @PathVariable Long userId) {
+    eventService.addParticipant(eventid, userId);
     return ResponseEntity.ok().build();
   }
 
@@ -47,6 +53,12 @@ public class EventController {
   public ResponseEntity<?> unEnrollEvent(@PathVariable Long eventid, @PathVariable Long userId) {
     eventService.removeParticipant(eventid, userId);
     return ResponseEntity.ok().build();
+  }
+
+  @PostMapping("/create/{diseCode}")
+  public ResponseEntity<?> creteEvent(@RequestBody Event event, @PathVariable long diseCode) {
+    eventService.createEvent(event, diseCode);
+    return
   }
 
 }

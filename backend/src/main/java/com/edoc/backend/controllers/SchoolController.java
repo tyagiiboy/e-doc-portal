@@ -4,6 +4,7 @@ import com.edoc.backend.dto.ResponseMessage;
 import com.edoc.backend.dto.SchoolDto;
 import com.edoc.backend.services.SchoolService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,7 +24,7 @@ public class SchoolController {
   }
 
   @GetMapping("/status/{status}")
-  public ResponseEntity<?> getUnauthorizedSchools(@PathVariable boolean status) {
+  public ResponseEntity<?> schoolsByStatus(@PathVariable boolean status) {
     return ResponseEntity.ok(schoolService.getSchoolsByAuthorizationStatus(status));
   }
 
@@ -32,10 +33,13 @@ public class SchoolController {
     return ResponseEntity.ok(schoolService.getSchoolByDiseCode(id));
   }
 
-  @GetMapping("/unauthorize")
-  public ResponseEntity<?> unAuthorizeSchools(@RequestBody List<Long> schools) {
-    List<SchoolDto> schoool = schoolService.getSchools();
-    if (schoolService.setAuthorization(schoool, false) != null)
+  @PostMapping("/set/status/{status}")
+  @Modifying
+  public ResponseEntity<?> setAuthorizations(
+      @RequestBody List<SchoolDto> schools,
+      @PathVariable boolean status
+  ) {
+    if (schoolService.setAuthorization(schools, status) != null)
       return ResponseEntity.accepted().build();
     return ResponseEntity.status(HttpStatus.valueOf(500)).build();
   }

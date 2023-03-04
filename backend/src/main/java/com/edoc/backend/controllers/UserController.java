@@ -5,10 +5,7 @@ import com.edoc.backend.entities.User;
 import com.edoc.backend.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/user")
@@ -19,13 +16,17 @@ public class UserController {
   public ResponseEntity<?> registerUser(@RequestBody User user){
     userService.registerStudent(user);
     return ResponseEntity.ok().build();
-
   }
 
-  @PostMapping("/updateprofile")
+  @PostMapping("/update")
   public ResponseEntity<?> updateUser(@RequestBody UserDto old){
     userService.updateProfile(old);
     return ResponseEntity.ok().build();
+  }
+
+  @GetMapping("/{userId}")
+  public ResponseEntity<?> userProfile(@PathVariable long userId) {
+    return ResponseEntity.ok(userService.getProfileById(userId));
   }
 }
 

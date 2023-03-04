@@ -10,6 +10,7 @@ import com.edoc.backend.entities.User;
 import com.edoc.backend.enums.Role;
 import com.edoc.backend.repositories.AdmissionRepository;
 import com.edoc.backend.repositories.EventRepository;
+import com.edoc.backend.repositories.SchoolRepository;
 import com.edoc.backend.repositories.UserRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,13 +30,19 @@ public class EventService {
   @Autowired
   private UserRepository userRepository;
   @Autowired
+  private SchoolRepository schoolRepository;
+  @Autowired
   private ModelMapper mapper;
 
-  public EventDto createEvent(Event newEvent, School school) {
-    Event event = eventRepository.save(newEvent);
+  public EventDto createEvent(Event event, long diseCode) {
+    School school = schoolRepository.findById(diseCode).orElseThrow();
+    school.getEventList().add(event);
+    event.setOrganizer(school);
+    schoolRepository.save(school);
+
     EventDto dto = mapper.map(event, EventDto.class);
     System.out.println(dto.getOrganizer());
-    dto.setOrganizer(mapper.map(event.getOrganizer(), SchoolDto.class));
+    dto.setOrganizer(mapper.map(school, SchoolDto.class));
     return dto;
   }
 
