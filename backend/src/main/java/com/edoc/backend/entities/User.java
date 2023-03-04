@@ -25,27 +25,17 @@ import javax.validation.constraints.NotBlank;
 
 import com.edoc.backend.enums.Category;
 import com.edoc.backend.enums.Role;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.validator.constraints.Length;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
 @Entity
 @Table(name="users")
 @Data
 @Builder
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
 public class User implements Serializable {
 
 	private static final long serialVersionUID = -6829875523246984650L;
@@ -86,9 +76,10 @@ public class User implements Serializable {
 	
 	@Column(name="user_name")
 	private String username;
-	
-	@JsonProperty(access=Access.WRITE_ONLY)
+
+	@JsonProperty(access = Access.WRITE_ONLY)
 	@Length(min = 8, max = 20)
+	@ToString.Exclude
 	private String password;
 	
 	@Column(name="father_name")
@@ -126,8 +117,8 @@ public class User implements Serializable {
 	@JoinColumn(name="school_dise_code")
 	private School school;
 	
-	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-	private PersonalDocument presonalDocument;
+//	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+//	private PersonalDocument presonalDocument;
 	
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
 	private Set<Admission> admissionList = new HashSet<>();

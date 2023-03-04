@@ -20,5 +20,5 @@ public class EventDto {
     private Date endDate;
     private Date lastDateOfEnrollment;
     private Date announcementDate;
-    private SchoolDto school;
+    private SchoolDto organizer;
 }

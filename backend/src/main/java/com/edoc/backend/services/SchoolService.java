@@ -5,6 +5,7 @@ import com.edoc.backend.dto.SchoolDto;
 import com.edoc.backend.entities.School;
 import com.edoc.backend.repositories.SchoolRepository;
 import com.edoc.backend.repositories.UserRepository;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +20,8 @@ public class SchoolService {
   @Autowired
   private UserRepository userRepository;
   @Autowired
+  private ModelMapper mapper;
+  @Autowired
   private SchoolRepository schoolRepository;
 
   public ResponseMessage countOfSchools() {
@@ -32,25 +35,22 @@ public class SchoolService {
     List<SchoolDto> schools = new ArrayList<>();
     schoolRepository
         .findByAuthorizationStatus(status)
-        .forEach(
-            school -> schools.add(
-                SchoolDto.builder()
-                    .authorizationStatus(school.getAuthorizationStatus())
-                    .level(school.getLevel())
-                    .coEd(school.getCoEd())
-                    .name(school.getName())
-                    .diseCode(school.getDiseCode())
-                    .build()
-            )
-        );
+        .forEach(school -> schools.add(mapper.map(school, SchoolDto.class)));
     return schools;
   }
 
-  public School unRegisterSchoolByDiseCode(Long diseCode) {
+  public List<SchoolDto> getSchools() {
+    List<SchoolDto> schools = new ArrayList<>();
+    schoolRepository.findAll()
+        .forEach(school -> schools.add(mapper.map(school, SchoolDto.class)));
+    return schools;
+  }
+
+  public SchoolDto unRegisterSchoolByDiseCode(Long diseCode) {
     School school = schoolRepository.findById(diseCode).orElseThrow();
     school.setAuthorizationStatus(false);
     schoolRepository.save(school);
-    return school;
+    return mapper.map(school, SchoolDto.class);
   }
 
 }

@@ -1,49 +1,28 @@
 package com.edoc.backend.entities;
 
-import java.io.Serializable;
-import java.time.LocalDate;
-import java.util.List;
-import java.util.Set;
-
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-
 import com.edoc.backend.enums.SchoolClass;
 import com.edoc.backend.enums.Stream;
-import org.hibernate.annotations.CreationTimestamp;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
+
+import javax.persistence.*;
+import java.io.Serializable;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "admissions")
 @Data
 @Builder
-@Getter
-@Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Admission implements Serializable {
-	
-	/**
-	 * 
-	 */
+public class Admission implements Serializable, Comparable<Admission> {
 	private static final long serialVersionUID = -4895496645611865989L;
 
 	@Id
@@ -72,12 +51,17 @@ public class Admission implements Serializable {
 	@ManyToMany
 	@JoinTable(name = "participations",joinColumns = @JoinColumn(name="admission_id"),
 	inverseJoinColumns = @JoinColumn(name="event_id"))
-	private List<Event> participations;
+	private Set<Event> participations = new HashSet<>();
 	
 	@OneToMany(mappedBy = "admission", cascade = CascadeType.ALL, orphanRemoval = true)
-	private Set<Certificate> certificates;
+	private Set<Certificate> certificates = new HashSet<>();
 	
 	@ManyToOne
 	@JoinColumn(name = "user_id")
 	private User user;
+
+	@Override
+	public int compareTo(Admission o) {
+		return o.getAdmissionId().compareTo(admissionId);
+	}
 }

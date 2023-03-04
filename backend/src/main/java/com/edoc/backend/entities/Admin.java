@@ -9,10 +9,7 @@ import javax.validation.constraints.NotBlank;
 @Entity
 @Table(name = "admins")
 @Data
-@Getter
-@Setter
 @Builder
-@EqualsAndHashCode(callSuper = false)
 public class Admin {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -22,5 +19,6 @@ public class Admin {
     @NotBlank(message = "username cannot be blank")
     private String username;
     @Length(max = 20, min = 8)
+    @ToString.Exclude
     private String password;
 }

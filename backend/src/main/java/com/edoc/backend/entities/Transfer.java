@@ -7,11 +7,8 @@ import javax.persistence.*;
 @Entity
 @Table(name = "transfers")
 @Data
-@Getter
-@Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode(callSuper = false)
 @Builder
 public class Transfer {
 
