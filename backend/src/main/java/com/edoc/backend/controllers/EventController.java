@@ -1,8 +1,6 @@
 package com.edoc.backend.controllers;
 
-import com.edoc.backend.dto.SchoolDto;
 import com.edoc.backend.entities.Event;
-import com.edoc.backend.entities.School;
 import com.edoc.backend.services.EventService;
 import com.edoc.backend.services.SchoolService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,7 +56,7 @@ public class EventController {
   @PostMapping("/create/{diseCode}")
   public ResponseEntity<?> creteEvent(@RequestBody Event event, @PathVariable long diseCode) {
     eventService.createEvent(event, diseCode);
-    return
+    return ResponseEntity.ok().build();
   }
 
 }

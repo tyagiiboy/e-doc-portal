@@ -2,6 +2,8 @@ package com.edoc.backend.services;
 
 import com.edoc.backend.dto.SchoolDto;
 import com.edoc.backend.dto.StudentDto;
+import com.edoc.backend.dto.UserDto;
+import com.edoc.backend.entities.School;
 import com.edoc.backend.entities.User;
 import com.edoc.backend.enums.Role;
 import com.edoc.backend.repositories.AdmissionRepository;
@@ -27,6 +29,7 @@ public class StudentService {
 
   @Autowired
   private SchoolRepository schoolRepository;
+
   public StudentDto getStudentById(long id) {
     User student = userRepository.getReferenceById(id);
     StudentDto studentDto = mapper.map(student, StudentDto.class);
@@ -59,6 +62,29 @@ public class StudentService {
     return true;
   }
 
+//  public List<StudentDto> getStudentsBySchool(long diseCode) {
+//    List<User> students = userRepository.findByRoleAndSchoolDiseCode(Role.STUDENT, diseCode);
+//    List<StudentDto> userDtos = new ArrayList<>();
+//    students.forEach(
+//        user -> userDtos.add(mapper.map(user, StudentDto.class))
+//    );
+//    return userDtos;
+//  }
 
+  public List<StudentDto> getStudentsBySchool(long diseCode) {
+    School school = schoolRepository.findById(diseCode).orElseThrow();
+    List<StudentDto> studentDtos = new ArrayList<>();
+
+    school
+        .getUserList()
+        .stream()
+        .filter(
+            user -> user.getRole().equals(Role.STUDENT)
+        ).forEach(
+            user -> studentDtos.add(mapper.map(user, StudentDto.class))
+        );
+
+    return studentDtos;
+  }
 
 }

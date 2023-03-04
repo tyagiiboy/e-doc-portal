@@ -2,6 +2,8 @@ package com.edoc.backend.controllers;
 
 import com.edoc.backend.dto.ResponseMessage;
 import com.edoc.backend.dto.SchoolDto;
+import com.edoc.backend.dto.StudentDto;
+import com.edoc.backend.entities.School;
 import com.edoc.backend.services.SchoolService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.Modifying;
@@ -28,7 +30,7 @@ public class SchoolController {
     return ResponseEntity.ok(schoolService.getSchoolsByAuthorizationStatus(status));
   }
 
-  @GetMapping("/{id}")
+  @GetMapping("/get/{id}")
   public ResponseEntity<?> schoolDetailsByDiseCode(@PathVariable long id) {
     return ResponseEntity.ok(schoolService.getSchoolByDiseCode(id));
   }
@@ -42,6 +44,18 @@ public class SchoolController {
     if (schoolService.setAuthorization(schools, status) != null)
       return ResponseEntity.accepted().build();
     return ResponseEntity.status(HttpStatus.valueOf(500)).build();
+  }
+
+  @PostMapping("/create")
+  public ResponseEntity<?> createSchool(@RequestBody School school) {
+    SchoolDto schoolDto = schoolService.createSchool(school);
+    return ResponseEntity.ok(schoolDto);
+  }
+
+  @PutMapping("/remove/student")
+  public ResponseEntity<?> removeFromSchool(@RequestBody List<StudentDto> students) {
+    if (schoolService.removeStudents(students)) return ResponseEntity.ok().build();
+    return ResponseEntity.badRequest().build();
   }
 
 }

@@ -7,6 +7,7 @@ import com.edoc.backend.services.EventService;
 import com.edoc.backend.services.SchoolService;
 import com.edoc.backend.services.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -18,17 +19,17 @@ import java.util.List;
 public class StudentController {
 
     @Autowired
-    private SchoolService schoolService;
-
-    @Autowired
-    private EventService eventService;
-
-    @Autowired
     private StudentService studentService;
 
     @GetMapping("/all")
     public ResponseEntity<?> getAllStudents() {
         return ResponseEntity.ok(studentService.getStudents());
     }
+
+//    @PutMapping("/remove/school")
+//    public ResponseEntity<?> removeFromSchool(@RequestBody List<StudentDto> students) {
+//        if ()
+//        return null;
+//    }
 
 }

@@ -2,11 +2,13 @@ package com.edoc.backend.services;
 
 import com.edoc.backend.dto.ResponseMessage;
 import com.edoc.backend.dto.SchoolDto;
+import com.edoc.backend.dto.StudentDto;
 import com.edoc.backend.entities.School;
 import com.edoc.backend.repositories.SchoolRepository;
 import com.edoc.backend.repositories.UserRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -53,6 +55,7 @@ public class SchoolService {
     return mapper.map(school, SchoolDto.class);
   }
 
+  @Modifying
   public SchoolDto createSchool(School school) {
     schoolRepository.findById(school.getDiseCode());
     school.setAuthorizationStatus(false);
@@ -76,6 +79,31 @@ public class SchoolService {
 
     return schools;
   }
+
+  @Modifying
+  public boolean removeStudents(List<StudentDto> studentDtos) {
+    if (studentDtos.size() == 0) return false;
+    long diseCode = studentDtos.get(0).getSchool().getDiseCode();
+    School school = schoolRepository
+        .findById(diseCode)
+        .orElseThrow();
+    school
+        .getUserList()
+        .stream()
+        .filter(
+            user -> studentDtos.contains(mapper.map(user, StudentDto.class))
+        )
+        .forEach(
+            user -> {
+              user.setSchool(null);
+              school.getUserList().remove(user);
+            }
+        );
+    schoolRepository.save(school);
+    return true;
+  }
+
+
 
 }
 
