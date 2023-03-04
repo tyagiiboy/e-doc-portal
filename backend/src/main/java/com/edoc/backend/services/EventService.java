@@ -8,6 +8,7 @@ import com.edoc.backend.entities.Event;
 import com.edoc.backend.entities.School;
 import com.edoc.backend.entities.User;
 import com.edoc.backend.enums.Role;
+import com.edoc.backend.repositories.AdmissionRepository;
 import com.edoc.backend.repositories.EventRepository;
 import com.edoc.backend.repositories.UserRepository;
 import org.modelmapper.ModelMapper;
@@ -23,7 +24,8 @@ import java.util.List;
 public class EventService {
   @Autowired
   private EventRepository eventRepository;
-
+  @Autowired
+  private AdmissionRepository admissionRepository;
   @Autowired
   private UserRepository userRepository;
   @Autowired
@@ -94,6 +96,21 @@ public class EventService {
 
     admission.getParticipations().add(event);
     event.getParticipants().add(admission);
+    eventRepository.save(event);
+  }
+
+  public void removeParticipant(long eventId, long userId) {
+    Event event = eventRepository.findById(eventId).orElseThrow();
+
+    Admission admission = (Admission) admissionRepository
+        .getAdmissionHistoryByUserId(userId)
+        .stream()
+        .sorted()
+        .toArray()[0];
+
+    admission.getParticipations().remove(event);
+    event.getParticipants().remove(admission);
+
     eventRepository.save(event);
   }
 }

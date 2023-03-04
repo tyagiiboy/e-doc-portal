@@ -43,9 +43,9 @@ public class EventController {
     return ResponseEntity.ok((eventService.getParticipants(id)));
   }
 
-  @PostMapping("/{eventid}/{id}")
-  public ResponseEntity<?> unEnrollEvent(@PathVariable Long eventid, @PathVariable Long id) {
-
+  @PostMapping("/{eventid}/{userId}")
+  public ResponseEntity<?> unEnrollEvent(@PathVariable Long eventid, @PathVariable Long userId) {
+    eventService.removeParticipant(eventid, userId);
     return ResponseEntity.ok().build();
   }
 

@@ -20,12 +20,12 @@ public class UserService {
   }
 
   public UserDto getProfileById(Long id) {
-    User user = userRepository.getReferenceById(id);
+    User user = userRepository.findById(id).orElseThrow();
     return mapper.map(user, UserDto.class);
   }
 
   public void updateProfile(UserDto user) {
-    User user1 = userRepository.getReferenceById(user.getId());
+    User user1 = userRepository.findById(user.getId()).orElseThrow();
     user1.setRole(user.getRole());
     user1.setAddress(user.getAddress());
     user1.setAccoutNumber(user.getAccoutNumber());

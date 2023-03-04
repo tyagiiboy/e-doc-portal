@@ -23,8 +23,9 @@ public class UserController {
   }
 
   @PostMapping("/updateprofile")
-  public ResponseEntity<?> updateUser(@RequestBody UserDto user){
-
+  public ResponseEntity<?> updateUser(@RequestBody UserDto old){
+    userService.updateProfile(old);
+    return ResponseEntity.ok().build();
   }
 }
 

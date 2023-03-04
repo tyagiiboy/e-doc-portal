@@ -4,12 +4,13 @@ import com.edoc.backend.entities.Admission;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
-public interface AdmissionRepository extends JpaRepository<Admission, Long> {
+import java.util.List;
 
+public interface AdmissionRepository extends JpaRepository<Admission, Long> {
   @Query(
       value = "SELECT a FROM Admission a " +
           "WHERE a.user.id = ?1 " +
           "ORDER BY a.admissionId DESC"
   )
-  Admission getAdmissionHistoryOfUserId(long id);
+  List<Admission> getAdmissionHistoryByUserId(long id);
 }
