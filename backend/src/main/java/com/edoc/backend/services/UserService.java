@@ -5,17 +5,25 @@ import com.edoc.backend.entities.User;
 import com.edoc.backend.repositories.UserRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
+@Service
+@Transactional
+@SuppressWarnings("unused")
 public class UserService {
 
   @Autowired
   private UserRepository userRepository;
+
   @Autowired
   private ModelMapper mapper;
 
+  @Modifying
   public void registerStudent(User user) {
     userRepository.save(user);
   }
@@ -25,6 +33,7 @@ public class UserService {
     return mapper.map(user, UserDto.class);
   }
 
+  @Modifying
   public void updateProfile(UserDto user) {
     User user1 = userRepository.findById(user.getId()).orElseThrow();
     user1.setRole(user.getRole());

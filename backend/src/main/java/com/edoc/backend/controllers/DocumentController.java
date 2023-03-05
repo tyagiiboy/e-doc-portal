@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/document")
+@SuppressWarnings("unused")
 public class DocumentController {
 
   public ResponseEntity<?> index() {

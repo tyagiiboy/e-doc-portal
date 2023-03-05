@@ -25,13 +25,14 @@ public class Transfer {
     private User user;
 
     @ManyToOne
+    @JoinColumn(name = "respondant")
     private School respondant;
 
     @Column(name = "class")
     @Enumerated(EnumType.STRING)
     private SchoolClass schoolClass;
 
-    @Column(name = "class")
+    @Column(name = "stream")
     @Enumerated(EnumType.STRING)
     private Stream stream;
 

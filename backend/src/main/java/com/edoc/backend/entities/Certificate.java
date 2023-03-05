@@ -19,6 +19,10 @@ public class Certificate implements Serializable {
 
   private static final long serialVersionUID = -6767962525589390810L;
 
+  @Id
+  @Column(name = "admission_id")
+  private long admissionId;
+
   @Column(columnDefinition = "text", name = "document_link")
   private String documentLink;
 
@@ -27,7 +31,7 @@ public class Certificate implements Serializable {
   private DocumentType documentType;
 
   // mapping to be done
-  @Id
+  @MapsId
   @ManyToOne
   @JoinColumn(name = "admission_no")
   private Admission admission;

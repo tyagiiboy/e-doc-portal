@@ -1,6 +1,6 @@
 package com.edoc.backend.services;
 
-import com.edoc.backend.dto.UserDto;
+import com.edoc.backend.dto.EventDto;
 import com.edoc.backend.entities.Admission;
 import com.edoc.backend.entities.Event;
 import com.edoc.backend.entities.User;
@@ -14,7 +14,9 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Transactional
 @Service
@@ -32,15 +34,6 @@ public class ParticipationService {
   @Autowired
   private AdmissionRepository admissionRepository;
 
-  public List<UserDto> getParticipants(Long id) {
-    Event event = eventRepository.findById(id).orElseThrow();
-    List<UserDto> users = new ArrayList<>();
-    event.getParticipants()
-        .forEach((Admission admission) -> users.add(
-            mapper.map(admission.getUser(), UserDto.class)
-        ));
-    return users;
-  }
 
   public void addParticipant(long eventId, long id) {
     Event event = eventRepository.findById(eventId).orElseThrow();
@@ -69,6 +62,28 @@ public class ParticipationService {
     event.getParticipants().remove(admission);
 
     eventRepository.save(event);
+  }
+
+  public Map<Long, List<EventDto>> getAllParticipationsOf(long userId) {
+    List<Admission> admissionList = admissionRepository.findByUserId(userId);
+    HashMap<Long, List<EventDto>> admissionsAndParticipations = new HashMap<>();
+
+    admissionList.forEach(
+        admission -> {
+          List<EventDto> events = new ArrayList<>();
+          admission
+              .getParticipations()
+              .forEach(
+                  event -> events.add(mapper.map(event, EventDto.class))
+              );
+          admissionsAndParticipations
+              .put(
+                  admission.getAdmissionId(),
+                  events
+              );
+        }
+    );
+    return admissionsAndParticipations;
   }
 
 }

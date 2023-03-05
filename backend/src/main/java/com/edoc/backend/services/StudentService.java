@@ -18,6 +18,7 @@ import java.util.List;
 
 @Service
 @Transactional
+@SuppressWarnings("unused")
 public class StudentService {
   @Autowired
   private UserRepository userRepository;
@@ -61,14 +62,16 @@ public class StudentService {
     return true;
   }
 
-//  public List<StudentDto> getStudentsBySchool(long diseCode) {
-//    List<User> students = userRepository.findByRoleAndSchoolDiseCode(Role.STUDENT, diseCode);
-//    List<StudentDto> userDtos = new ArrayList<>();
-//    students.forEach(
-//        user -> userDtos.add(mapper.map(user, StudentDto.class))
-//    );
-//    return userDtos;
-//  }
+/*
+  public List<StudentDto> getStudentsBySchool(long diseCode) {
+    List<User> students = userRepository.findByRoleAndSchoolDiseCode(Role.STUDENT, diseCode);
+    List<StudentDto> userDtos = new ArrayList<>();
+    students.forEach(
+        user -> userDtos.add(mapper.map(user, StudentDto.class))
+    );
+    return userDtos;
+  }
+*/
 
   public List<StudentDto> getStudentsBySchool(long diseCode) {
     School school = schoolRepository.findById(diseCode).orElseThrow();

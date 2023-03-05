@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface TransferRepository extends JpaRepository<Transfer, Long> {
   @Query(
-      value = "select t from Transfer t where t.school.diseCode = ?1"
+      value = "select t from Transfer t where t.respondant.diseCode = ?1"
   )
   List<Transfer> findBySchoolDiseCode(long diseCode);
 }

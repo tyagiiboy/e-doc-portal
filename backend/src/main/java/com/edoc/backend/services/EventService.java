@@ -2,6 +2,8 @@ package com.edoc.backend.services;
 
 import com.edoc.backend.dto.EventDto;
 import com.edoc.backend.dto.SchoolDto;
+import com.edoc.backend.dto.UserDto;
+import com.edoc.backend.entities.Admission;
 import com.edoc.backend.entities.Event;
 import com.edoc.backend.entities.School;
 import com.edoc.backend.repositories.AdmissionRepository;
@@ -87,6 +89,16 @@ public class EventService {
     event.setStartDate(eventDto.getStartDate());
     eventRepository.save(event);
     return eventDto;
+  }
+
+  public List<UserDto> getParticipants(Long id) {
+    Event event = eventRepository.findById(id).orElseThrow();
+    List<UserDto> users = new ArrayList<>();
+    event.getParticipants()
+        .forEach((Admission admission) -> users.add(
+            mapper.map(admission.getUser(), UserDto.class)
+        ));
+    return users;
   }
 
 }

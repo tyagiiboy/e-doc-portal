@@ -13,4 +13,5 @@ public interface AdmissionRepository extends JpaRepository<Admission, Long> {
           "ORDER BY a.admissionId DESC"
   )
   List<Admission> getAdmissionHistoryByUserId(long id);
+  List<Admission> findByUserId(Long userId);
 }
