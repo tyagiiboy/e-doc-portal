@@ -9,20 +9,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping("/student")
+@SuppressWarnings("unused")
 public class StudentController {
 
-    @Autowired
-    private StudentService studentService;
+  @Autowired
+  private StudentService studentService;
 
-    @GetMapping("/all")
-    public ResponseEntity<?> getAllStudents() {
-        return ResponseEntity.ok(studentService.getStudents());
-    }
-
-//    @PutMapping("/remove/school")
-//    public ResponseEntity<?> removeFromSchool(@RequestBody List<StudentDto> students) {
-//        if ()
-//        return null;
-//    }
+  @GetMapping("/all")
+  public ResponseEntity<?> getAllStudents() {
+    return ResponseEntity.ok(studentService.getStudents());
+  }
 
 }

@@ -14,6 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/school")
+@SuppressWarnings("unused")
 public class SchoolController {
 
   @Autowired
@@ -21,12 +22,12 @@ public class SchoolController {
 
   @GetMapping("/all")
   public ResponseEntity<?> getSchools() {
-    return ResponseEntity.ok(schoolService.getSchools());
+    return ResponseEntity.ok(schoolService.getSchoolList());
   }
 
   @GetMapping("/status/{status}")
   public ResponseEntity<?> schoolsByStatus(@PathVariable boolean status) {
-    return ResponseEntity.ok(schoolService.getSchoolsByAuthorizationStatus(status));
+    return ResponseEntity.ok(schoolService.getSchoolListByAuthorizationStatus(status));
   }
 
   @GetMapping("/get/{id}")
@@ -40,7 +41,7 @@ public class SchoolController {
       @RequestBody List<SchoolDto> schools,
       @PathVariable boolean status
   ) {
-    if (schoolService.setAuthorization(schools, status) != null)
+    if (schoolService.setAuthorizationOfSchoolsInList(schools, status) != null)
       return ResponseEntity.accepted().build();
     return ResponseEntity.status(HttpStatus.valueOf(500)).build();
   }
@@ -53,7 +54,7 @@ public class SchoolController {
 
   @PostMapping("/remove/student")
   public ResponseEntity<?> removeFromSchool(@RequestBody List<StudentDto> students) {
-    if (schoolService.removeStudents(students)) return ResponseEntity.ok().build();
+    if (schoolService.removeStudentsInList(students)) return ResponseEntity.ok().build();
     return ResponseEntity.badRequest().build();
   }
 

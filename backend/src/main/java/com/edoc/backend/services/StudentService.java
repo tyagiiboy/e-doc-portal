@@ -57,23 +57,7 @@ public class StudentService {
     return students;
   }
 
-  public boolean existsById(long id) {
-    userRepository.findByIdAndRole(id, Role.STUDENT).orElseThrow();
-    return true;
-  }
-
-/*
-  public List<StudentDto> getStudentsBySchool(long diseCode) {
-    List<User> students = userRepository.findByRoleAndSchoolDiseCode(Role.STUDENT, diseCode);
-    List<StudentDto> userDtos = new ArrayList<>();
-    students.forEach(
-        user -> userDtos.add(mapper.map(user, StudentDto.class))
-    );
-    return userDtos;
-  }
-*/
-
-  public List<StudentDto> getStudentsBySchool(long diseCode) {
+  public List<StudentDto> getStudentListFromDiseCode(long diseCode) {
     School school = schoolRepository.findById(diseCode).orElseThrow();
     List<StudentDto> studentDtos = new ArrayList<>();
 

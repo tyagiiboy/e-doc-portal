@@ -22,7 +22,7 @@ public class EventController {
   }
 
   @GetMapping("/{id}")
-  public ResponseEntity<?> getEventDetails(@PathVariable long id) {
+  public ResponseEntity<?> getEventDetailsById(@PathVariable long id) {
     return ResponseEntity.ok(eventService.getEventById(id));
   }
 

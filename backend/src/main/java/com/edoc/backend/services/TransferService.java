@@ -20,6 +20,7 @@ import java.util.List;
 
 @Service
 @Transactional
+@SuppressWarnings("unused")
 public class TransferService {
 
   @Autowired
@@ -35,7 +36,7 @@ public class TransferService {
   private ModelMapper mapper;
 
   @Modifying
-  public Transfer createTransfer(long userId, long diseCode) {
+  public Transfer createTransferOfUserIdToDiseCode(long userId, long diseCode) {
     User user = userRepository.findById(userId).orElseThrow();
     School school = schoolRepository.findById(diseCode).orElseThrow();
     Transfer transfer = Transfer.builder()
@@ -45,7 +46,7 @@ public class TransferService {
     return transferRepository.save(transfer);
   }
 
-  public List<TransferDto> getAllByDiseCode(long diseCode) {
+  public List<TransferDto> getAllTransferRequestForSchoolByDiseCode(long diseCode) {
     List<Transfer> transfers = transferRepository.findBySchoolDiseCode(diseCode);
 
     if (transfers == null) return null;
@@ -64,7 +65,7 @@ public class TransferService {
   }
 
   @Modifying
-  public void acceptListedTransfersBySchool(List<Long> transfers, long diseCode) {
+  public void acceptListedTransfersForSchoolDiseCode(List<Long> transfers, long diseCode) {
     School school = schoolRepository.findById(diseCode).orElseThrow();
     List<Transfer> transferList = transferRepository.findAllById(transfers);
 
@@ -83,10 +84,10 @@ public class TransferService {
         }
     );
     schoolRepository.save(school);
-    rejectListedTransfersBySchool(transfers, diseCode);
+    rejectListedTransfersForSchoolDiseCode(transfers, diseCode);
   }
 
-  public void rejectListedTransfersBySchool(List<Long> transfers, long diseCode) {
+  public void rejectListedTransfersForSchoolDiseCode(List<Long> transfers, long diseCode) {
     transferRepository.deleteAllById(transfers);
   }
 

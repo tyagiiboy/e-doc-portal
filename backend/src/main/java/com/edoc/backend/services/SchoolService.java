@@ -20,11 +20,12 @@ import java.util.stream.Collectors;
 
 @Service
 @Transactional
+@SuppressWarnings("unused")
 public class SchoolService {
 
   @Autowired
   private UserRepository userRepository;
-  @Autowired(required = true)
+  @Autowired
   private ModelMapper mapper;
   @Autowired
   private SchoolRepository schoolRepository;
@@ -36,7 +37,7 @@ public class SchoolService {
         .build();
   }
 
-  public List<SchoolDto> getSchoolsByAuthorizationStatus(boolean status) {
+  public List<SchoolDto> getSchoolListByAuthorizationStatus(boolean status) {
     List<SchoolDto> schools = new ArrayList<>();
     schoolRepository
         .findByAuthorizationStatus(status)
@@ -44,14 +45,14 @@ public class SchoolService {
     return schools;
   }
 
-  public List<SchoolDto> getSchools() {
+  public List<SchoolDto> getSchoolList() {
     List<SchoolDto> schools = new ArrayList<>();
     schoolRepository.findAll()
         .forEach(school -> schools.add(mapper.map(school, SchoolDto.class)));
     return schools;
   }
 
-  public SchoolDto unAuthorizeByDiseCode(Long diseCode) {
+  public SchoolDto unAuthorizeSchoolByDiseCode(Long diseCode) {
     School school = schoolRepository.findById(diseCode).orElseThrow();
     school.setAuthorizationStatus(false);
     schoolRepository.save(school);
@@ -69,7 +70,7 @@ public class SchoolService {
     return mapper.map(schoolRepository.findById(diseCode), SchoolDto.class);
   }
 
-  public List<SchoolDto> setAuthorization(List<SchoolDto> schools, boolean status) {
+  public List<SchoolDto> setAuthorizationOfSchoolsInList(List<SchoolDto> schools, boolean status) {
     Set<SchoolDto> set = new HashSet<>(schools);
     List<School> all = schoolRepository.findAll();
 
@@ -84,7 +85,7 @@ public class SchoolService {
   }
 
   @Modifying
-  public boolean removeStudents(List<StudentDto> studentDtos) {
+  public boolean removeStudentsInList(List<StudentDto> studentDtos) {
     if (studentDtos.size() == 0) return false;
     long diseCode = studentDtos.get(0).getSchool().getDiseCode();
     School school = schoolRepository
@@ -105,7 +106,6 @@ public class SchoolService {
     schoolRepository.save(school);
     return true;
   }
-
 
 
 }

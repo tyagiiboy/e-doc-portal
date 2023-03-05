@@ -16,13 +16,13 @@ public class UserController {
   UserService userService;
 
   @PostMapping("/register")
-  public ResponseEntity<?> registerUser(@RequestBody User user){
+  public ResponseEntity<?> registerUser(@RequestBody User user) {
     userService.registerStudent(user);
     return ResponseEntity.ok().build();
   }
 
   @PostMapping("/update")
-  public ResponseEntity<?> updateUser(@RequestBody UserDto old){
+  public ResponseEntity<?> updateUser(@RequestBody UserDto old) {
     userService.updateProfile(old);
     return ResponseEntity.ok().build();
   }

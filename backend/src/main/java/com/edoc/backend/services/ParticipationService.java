@@ -20,6 +20,7 @@ import java.util.Map;
 
 @Transactional
 @Service
+@SuppressWarnings("unused")
 public class ParticipationService {
 
   @Autowired
@@ -35,21 +36,27 @@ public class ParticipationService {
   private AdmissionRepository admissionRepository;
 
 
-  public void addParticipant(long eventId, long id) {
+  public void addParticipationOfUserIdToEventId(long eventId, long id) {
     Event event = eventRepository.findById(eventId).orElseThrow();
     User student = userRepository.findByIdAndRole(id, Role.STUDENT).orElseThrow();
 
-    Admission admission = (Admission) student
+    Admission latestAdmissionForStudent = (Admission) student
         .getAdmissionList()
-        .stream().sorted()
+        .stream()
+        .sorted()
         .toArray()[0];
 
-    admission.getParticipations().add(event);
-    event.getParticipants().add(admission);
+    latestAdmissionForStudent
+        .getParticipations()
+        .add(event);
+    event
+        .getParticipants()
+        .add(latestAdmissionForStudent);
+
     eventRepository.save(event);
   }
 
-  public void removeParticipant(long eventId, long userId) {
+  public void removeParticipationOfUserIdFromEventId(long eventId, long userId) {
     Event event = eventRepository.findById(eventId).orElseThrow();
 
     Admission admission = (Admission) admissionRepository
@@ -58,31 +65,36 @@ public class ParticipationService {
         .sorted()
         .toArray()[0];
 
-    admission.getParticipations().remove(event);
-    event.getParticipants().remove(admission);
+    admission
+        .getParticipations()
+        .remove(event);
+    event
+        .getParticipants()
+        .remove(admission);
 
     eventRepository.save(event);
   }
 
-  public Map<Long, List<EventDto>> getAllParticipationsOf(long userId) {
+  public Map<Long, List<EventDto>> getAllParticipationsOfUserId(long userId) {
     List<Admission> admissionList = admissionRepository.findByUserId(userId);
     HashMap<Long, List<EventDto>> admissionsAndParticipations = new HashMap<>();
 
-    admissionList.forEach(
-        admission -> {
-          List<EventDto> events = new ArrayList<>();
-          admission
-              .getParticipations()
-              .forEach(
-                  event -> events.add(mapper.map(event, EventDto.class))
-              );
-          admissionsAndParticipations
-              .put(
-                  admission.getAdmissionId(),
-                  events
-              );
-        }
-    );
+    admissionList
+        .forEach(
+            admission -> {
+              List<EventDto> events = new ArrayList<>();
+              admission
+                  .getParticipations()
+                  .forEach(
+                      event -> events.add(mapper.map(event, EventDto.class))
+                  );
+              admissionsAndParticipations
+                  .put(
+                      admission.getAdmissionId(),
+                      events
+                  );
+            }
+        );
     return admissionsAndParticipations;
   }
 

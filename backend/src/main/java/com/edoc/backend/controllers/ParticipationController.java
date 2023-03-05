@@ -19,19 +19,19 @@ public class ParticipationController {
 
   @PostMapping("/add/{eventid}/{userId}")
   public ResponseEntity<?> participate(@PathVariable Long eventid, @PathVariable Long userId) {
-    participationService.addParticipant(eventid, userId);
+    participationService.addParticipationOfUserIdToEventId(eventid, userId);
     return ResponseEntity.ok().build();
   }
 
   @PostMapping("/remove/{eventid}/{userId}")
   public ResponseEntity<?> revokeParticipation(@PathVariable Long eventid, @PathVariable Long userId) {
-    participationService.removeParticipant(eventid, userId);
+    participationService.removeParticipationOfUserIdFromEventId(eventid, userId);
     return ResponseEntity.ok().build();
   }
 
   @GetMapping("/all/{userId}")
   public ResponseEntity<?> getAllParticipations(@PathVariable long id) {
-    return ResponseEntity.ok(participationService.getAllParticipationsOf(id));
+    return ResponseEntity.ok(participationService.getAllParticipationsOfUserId(id));
   }
 
 }
