@@ -11,9 +11,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -33,9 +31,6 @@ public class Admission implements Serializable, Comparable<Admission> {
 	@CreationTimestamp
 	@Column(name = "date_of_admission")
 	private LocalDate dateOfAdmission;
-	
-	@Column(name = "sr_no", nullable = false, updatable = false)
-	private Integer srNo;
 	
 	@Enumerated(EnumType.STRING)
 	@Column(name = "class")

@@ -3,7 +3,6 @@ package com.edoc.backend.dto;
 import lombok.Builder;
 import lombok.Data;
 import lombok.Getter;
-import org.springframework.http.HttpStatus;
 
 @Data
 @Getter

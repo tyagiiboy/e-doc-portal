@@ -2,7 +2,6 @@ package com.edoc.backend.services;
 
 import com.edoc.backend.dto.SchoolDto;
 import com.edoc.backend.dto.StudentDto;
-import com.edoc.backend.dto.UserDto;
 import com.edoc.backend.entities.School;
 import com.edoc.backend.entities.User;
 import com.edoc.backend.enums.Role;

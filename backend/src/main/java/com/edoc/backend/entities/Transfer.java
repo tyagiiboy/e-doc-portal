@@ -1,6 +1,11 @@
 package com.edoc.backend.entities;
 
-import lombok.*;
+import com.edoc.backend.enums.SchoolClass;
+import com.edoc.backend.enums.Stream;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
@@ -21,5 +26,13 @@ public class Transfer {
 
     @ManyToOne
     private School respondant;
+
+    @Column(name = "class")
+    @Enumerated(EnumType.STRING)
+    private SchoolClass schoolClass;
+
+    @Column(name = "class")
+    @Enumerated(EnumType.STRING)
+    private Stream stream;
 
 }

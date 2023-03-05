@@ -10,8 +10,10 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/user")
 public class UserController {
+
   @Autowired
   UserService userService;
+  
   @PostMapping("/register")
   public ResponseEntity<?> registerUser(@RequestBody User user){
     userService.registerStudent(user);
@@ -28,5 +30,11 @@ public class UserController {
   public ResponseEntity<?> userProfile(@PathVariable long userId) {
     return ResponseEntity.ok(userService.getProfileById(userId));
   }
+
+  @GetMapping("/all")
+  public ResponseEntity<?> getAllUsers() {
+    return ResponseEntity.ok(userService.getUsers());
+  }
+
 }
 

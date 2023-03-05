@@ -1,6 +1,5 @@
 package com.edoc.backend.controllers;
 
-import com.edoc.backend.dto.ResponseMessage;
 import com.edoc.backend.dto.SchoolDto;
 import com.edoc.backend.dto.StudentDto;
 import com.edoc.backend.entities.School;
@@ -52,7 +51,7 @@ public class SchoolController {
     return ResponseEntity.ok(schoolDto);
   }
 
-  @PutMapping("/remove/student")
+  @PostMapping("/remove/student")
   public ResponseEntity<?> removeFromSchool(@RequestBody List<StudentDto> students) {
     if (schoolService.removeStudents(students)) return ResponseEntity.ok().build();
     return ResponseEntity.badRequest().build();

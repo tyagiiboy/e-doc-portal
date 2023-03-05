@@ -7,17 +7,18 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
 @SpringBootApplication
+@SuppressWarnings("unused")
 public class BackendApplication {
-
-	public static void main(String[] args) {
-		SpringApplication.run(BackendApplication.class, args);
-	}
 
 	@Bean
 	public ModelMapper mapper() {
 		ModelMapper modelMapper = new ModelMapper();
 		modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
 		return modelMapper;
+	}
+
+	public static void main(String[] args) {
+		SpringApplication.run(BackendApplication.class, args);
 	}
 
 }

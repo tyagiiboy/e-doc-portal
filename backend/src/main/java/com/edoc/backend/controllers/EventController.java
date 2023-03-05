@@ -2,6 +2,7 @@ package com.edoc.backend.controllers;
 
 import com.edoc.backend.entities.Event;
 import com.edoc.backend.services.EventService;
+import com.edoc.backend.services.ParticipationService;
 import com.edoc.backend.services.SchoolService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -11,10 +12,10 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/event")
 public class EventController {
 
-  @Autowired
-  private EventService eventService;
-  @Autowired
-  private SchoolService schoolService;
+  @Autowired private EventService eventService;
+  @Autowired private SchoolService schoolService;
+
+  @Autowired private ParticipationService participationService;
 
   @GetMapping("/all")
   public ResponseEntity<?> getAllEvents() {
@@ -27,7 +28,7 @@ public class EventController {
   }
 
   @DeleteMapping("/delete/{id}")
-  public ResponseEntity<?> revokeEvent(@PathVariable long id) {
+  public ResponseEntity<?> deleteEvent(@PathVariable long id) {
     return ResponseEntity.ok(eventService.deleteEventById(id));
   }
 
@@ -38,18 +39,18 @@ public class EventController {
    */
   @PostMapping("/{eventid}/{userId}")
   public ResponseEntity<?> enrollEvent(@PathVariable Long eventid, @PathVariable Long userId) {
-    eventService.addParticipant(eventid, userId);
+    participationService.addParticipant(eventid, userId);
     return ResponseEntity.ok().build();
   }
 
-  @GetMapping("/{id}")
+  @GetMapping("/{id}/participants")
   public ResponseEntity<?> getEnrolledEvents(@PathVariable Long id) {
-    return ResponseEntity.ok((eventService.getParticipants(id)));
+    return ResponseEntity.ok((participationService.getParticipants(id)));
   }
 
   @PostMapping("/{eventid}/{userId}")
   public ResponseEntity<?> unEnrollEvent(@PathVariable Long eventid, @PathVariable Long userId) {
-    eventService.removeParticipant(eventid, userId);
+    participationService.removeParticipant(eventid, userId);
     return ResponseEntity.ok().build();
   }
 

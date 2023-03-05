@@ -2,12 +2,8 @@ package com.edoc.backend.services;
 
 import com.edoc.backend.dto.EventDto;
 import com.edoc.backend.dto.SchoolDto;
-import com.edoc.backend.dto.UserDto;
-import com.edoc.backend.entities.Admission;
 import com.edoc.backend.entities.Event;
 import com.edoc.backend.entities.School;
-import com.edoc.backend.entities.User;
-import com.edoc.backend.enums.Role;
 import com.edoc.backend.repositories.AdmissionRepository;
 import com.edoc.backend.repositories.EventRepository;
 import com.edoc.backend.repositories.SchoolRepository;
@@ -68,16 +64,6 @@ public class EventService {
     return events;
   }
 
-  public List<UserDto> getParticipants(Long id) {
-    Event event = eventRepository.findById(id).orElseThrow();
-    List<UserDto> users = new ArrayList<>();
-    event.getParticipants()
-        .forEach((Admission admission) -> users.add(
-            mapper.map(admission.getUser(), UserDto.class)
-        ));
-    return users;
-  }
-
   public EventDto deleteEventById(long eventId) {
     Event event = eventRepository.findById(eventId).orElseThrow();
 
@@ -92,32 +78,15 @@ public class EventService {
     return mapper.map(event, EventDto.class);
   }
 
-  public void addParticipant(long eventId, long id) {
-    Event event = eventRepository.findById(eventId).orElseThrow();
-    User student = userRepository.findByIdAndRole(id, Role.STUDENT).orElseThrow();
-
-    Admission admission = (Admission) student
-        .getAdmissionList()
-        .stream().sorted()
-        .toArray()[0];
-
-    admission.getParticipations().add(event);
-    event.getParticipants().add(admission);
+  public EventDto updateEventById(EventDto eventDto) {
+    Event event = eventRepository.findById(eventDto.getEventId()).orElseThrow();
+    event.setDescription(eventDto.getDescription());
+    event.setEventName(eventDto.getEventName());
+    event.setEndDate(eventDto.getEndDate());
+    event.setLastDateOfEnrollment(eventDto.getLastDateOfEnrollment());
+    event.setStartDate(eventDto.getStartDate());
     eventRepository.save(event);
+    return eventDto;
   }
 
-  public void removeParticipant(long eventId, long userId) {
-    Event event = eventRepository.findById(eventId).orElseThrow();
-
-    Admission admission = (Admission) admissionRepository
-        .getAdmissionHistoryByUserId(userId)
-        .stream()
-        .sorted()
-        .toArray()[0];
-
-    admission.getParticipations().remove(event);
-    event.getParticipants().remove(admission);
-
-    eventRepository.save(event);
-  }
 }

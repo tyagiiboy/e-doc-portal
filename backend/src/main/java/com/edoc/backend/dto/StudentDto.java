@@ -1,7 +1,5 @@
 package com.edoc.backend.dto;
 
-import com.edoc.backend.entities.School;
-import com.edoc.backend.enums.Role;
 import com.edoc.backend.enums.SchoolClass;
 import lombok.*;
 
