@@ -43,13 +43,9 @@ public class Admission implements Serializable, Comparable<Admission> {
 	@JoinColumn(name = "school_id")
 	private School school;
 
-	@ManyToMany
-//	@JoinTable(name = "participations",joinColumns = @JoinColumn(name="admission_id"),
-//	inverseJoinColumns = @JoinColumn(name="event_id"))
-	@JoinTable(
-			name = "participations",
-			joinColumns = {@JoinColumn(name = "admission_id") , @JoinColumn(name = "event_id")}
-	)
+	@ManyToMany(cascade = CascadeType.ALL)
+	@JoinTable(name = "participations",joinColumns = @JoinColumn(name="admission_id"),
+	inverseJoinColumns = @JoinColumn(name="event_id"))
 	private Set<Event> participations = new HashSet<>();
 	
 	@OneToMany(mappedBy = "admission", cascade = CascadeType.ALL, orphanRemoval = true)
