@@ -1,9 +1,6 @@
 package com.edoc.backend.entities;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -44,5 +41,6 @@ public class PersonalDocument implements Serializable {
   // mapping to be done
   @OneToOne
   @JoinColumn(name = "owner_id")
+  @EqualsAndHashCode.Exclude
   private User user;
 }

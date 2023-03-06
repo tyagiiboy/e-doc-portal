@@ -1,9 +1,6 @@
 package com.edoc.backend.entities;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
@@ -50,10 +47,12 @@ public class Event implements Serializable {
 	private Date announcementDate;
 
 	@ManyToMany(mappedBy = "participations")
+	@EqualsAndHashCode.Exclude
 	private Set<Admission> participants = new HashSet<>();
 
 	@ManyToOne
 	@JoinColumn(name = "school_id")
+	@EqualsAndHashCode.Exclude
 	private School organizer;
 
 }

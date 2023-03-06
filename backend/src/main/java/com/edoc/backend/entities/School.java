@@ -3,6 +3,7 @@ package com.edoc.backend.entities;
 import com.edoc.backend.enums.Level;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
@@ -46,22 +47,28 @@ public class School implements Serializable {
   private String address;
 
   @Column(name = "co_Ed")
+  @EqualsAndHashCode.Exclude
   private Boolean coEd;
 
   @Column(name = "contact_no1")
+  @EqualsAndHashCode.Exclude
   private Long contact1;
 
   @Column(name = "contact_no2")
+  @EqualsAndHashCode.Exclude
   private Long contact2;
 
   @Column(name = "website_link", columnDefinition = "text")
+  @EqualsAndHashCode.Exclude
   private String websiteLink;
 
   @Column(columnDefinition = "tinyint(1) default 1")
+  @EqualsAndHashCode.Exclude
   private Boolean authorizationStatus;
 
   @Column(name = "register_date")
-  @Temporal(TemporalType.DATE)
+  @CreationTimestamp
+  @EqualsAndHashCode.Exclude
   private Date registerDate;
 
   @Length(min = 5, max = 20)
@@ -70,21 +77,26 @@ public class School implements Serializable {
   @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
   @Length(min = 8, max = 20)
   @ToString.Exclude
+  @EqualsAndHashCode.Exclude
   private String password;
 
   /*
    * Mappings --> jpa
    */
-  @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "school")
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "school")
+  @EqualsAndHashCode.Exclude
   private Set<User> userList = new HashSet<>();
 
   @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "organizer")
+  @EqualsAndHashCode.Exclude
   private Set<Event> eventList = new HashSet<>();
 
-  @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "school")
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "school")
+  @EqualsAndHashCode.Exclude
   private Set<Admission> admissionList = new HashSet<>();
 
   @OneToMany(mappedBy = "respondant", cascade = CascadeType.ALL, orphanRemoval = true)
+  @EqualsAndHashCode.Exclude
   private Set<Transfer> pendingTransfers = new HashSet<>();
 
 }

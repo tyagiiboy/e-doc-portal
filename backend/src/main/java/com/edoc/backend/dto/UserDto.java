@@ -23,12 +23,12 @@ public class UserDto {
 
     private String username;
 
-    private Long disecode;
+    private Long diseCode;
 
     private Long contactNo;
 
     private String address;
 
-    private Long accoutNumber;
+    private Long accountNumber;
 
 }

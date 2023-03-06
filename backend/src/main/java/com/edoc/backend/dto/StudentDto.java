@@ -18,6 +18,5 @@ public class StudentDto {
     private String lastName;
     private String email;
     private SchoolDto school;
-    private SchoolClass schoolClass;
 
 }

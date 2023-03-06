@@ -2,10 +2,7 @@ package com.edoc.backend.entities;
 
 import com.edoc.backend.enums.SchoolClass;
 import com.edoc.backend.enums.Stream;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -26,6 +23,7 @@ public class Transfer {
 
     @ManyToOne
     @JoinColumn(name = "respondant")
+    @EqualsAndHashCode.Exclude
     private School respondant;
 
     @Column(name = "class")

@@ -4,9 +4,7 @@ import com.edoc.backend.enums.Category;
 import com.edoc.backend.enums.Role;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
-import lombok.Builder;
-import lombok.Data;
-import lombok.ToString;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.validator.constraints.Length;
 
@@ -22,6 +20,15 @@ import java.util.Set;
 @Table(name="users")
 @Data
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@EqualsAndHashCode(
+		exclude = {
+				"gender", "password", "accountNumber",
+				"address", "school", "admissionList",
+				"transferRequest"
+		}
+)
 public class User implements Serializable {
 
 	private static final long serialVersionUID = -6829875523246984650L;
@@ -71,7 +78,7 @@ public class User implements Serializable {
 	@Column(name="father_name")
 	@NotBlank(message="Name can not be Empty")
 	@Length(max = 20)
-	private String fastherName;
+	private String fatherName;
 	
 	@Column(name="mother_name")
 	@NotBlank(message="Name can not be Empty")
@@ -84,7 +91,7 @@ public class User implements Serializable {
 	
 	@Column(name="account_number")
 //	@Length(min=8,max = 15, message = "Invalid Account Number!!!!!!")
-	private Long accoutNumber;
+	private Long accountNumber;
 	
 	@Length(min=10, max=100)
 	private String address;

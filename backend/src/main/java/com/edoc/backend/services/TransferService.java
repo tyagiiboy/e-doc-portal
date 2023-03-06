@@ -1,6 +1,7 @@
 package com.edoc.backend.services;
 
 import com.edoc.backend.dto.TransferDto;
+import com.edoc.backend.dto.TransferRequest;
 import com.edoc.backend.dto.UserDto;
 import com.edoc.backend.entities.Admission;
 import com.edoc.backend.entities.School;
@@ -36,12 +37,14 @@ public class TransferService {
   private ModelMapper mapper;
 
   @Modifying
-  public Transfer createTransferOfUserIdToDiseCode(long userId, long diseCode) {
-    User user = userRepository.findById(userId).orElseThrow();
-    School school = schoolRepository.findById(diseCode).orElseThrow();
+  public Transfer createTransferOfUserIdToDiseCode(TransferRequest transferRequest) {
+    User user = userRepository.findById(transferRequest.getUserId()).orElseThrow();
+    School school = schoolRepository.findById(transferRequest.getDiseCode()).orElseThrow();
     Transfer transfer = Transfer.builder()
         .user(user)
         .respondant(school)
+        .schoolClass(transferRequest.getSchoolClass())
+        .stream(transferRequest.getStream())
         .build();
     return transferRepository.save(transfer);
   }

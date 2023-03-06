@@ -1,6 +1,7 @@
 package com.edoc.backend.controllers;
 
 import com.edoc.backend.dto.TransferDto;
+import com.edoc.backend.dto.TransferRequest;
 import com.edoc.backend.services.TransferService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,12 +18,9 @@ public class TransferController {
   @Autowired
   private TransferService transferService;
 
-  @PostMapping("/create/{userId}/{diseCode}")
-  public ResponseEntity<?> createTransfer(
-      @PathVariable long userId,
-      @PathVariable long diseCode
-  ) {
-    if (transferService.createTransferOfUserIdToDiseCode(userId, diseCode) == null)
+  @PostMapping("/create")
+  public ResponseEntity<?> createTransfer(@RequestBody TransferRequest transferRequest) {
+    if (transferService.createTransferOfUserIdToDiseCode(transferRequest) == null)
       return ResponseEntity.status(HttpStatus.valueOf(500)).build();
     return ResponseEntity.ok().build();
   }

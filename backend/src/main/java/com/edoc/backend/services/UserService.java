@@ -38,7 +38,7 @@ public class UserService {
     User user1 = userRepository.findById(user.getId()).orElseThrow();
     user1.setRole(user.getRole());
     user1.setAddress(user.getAddress());
-    user1.setAccoutNumber(user.getAccoutNumber());
+    user1.setAccountNumber(user.getAccountNumber());
     user1.setAddress(user.getAddress());
     user1.setFirstName(user.getFirstName());
     user1.setEmail(user.getEmail());

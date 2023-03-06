@@ -2,10 +2,7 @@ package com.edoc.backend.entities;
 
 import com.edoc.backend.enums.SchoolClass;
 import com.edoc.backend.enums.Stream;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
@@ -20,6 +17,9 @@ import java.util.Set;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode(
+		exclude = {"school", "user", "certificates", "participations"}
+)
 public class Admission implements Serializable, Comparable<Admission> {
 	private static final long serialVersionUID = -4895496645611865989L;
 

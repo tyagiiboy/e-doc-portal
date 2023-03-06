@@ -3,15 +3,12 @@ package com.edoc.backend.controllers;
 import com.edoc.backend.services.ParticipationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
 
-@RestController("/participation")
-@Transactional
+@RestController
+@RequestMapping("/participation")
 @SuppressWarnings("unused")
 public class ParticipationController {
 
@@ -30,8 +27,8 @@ public class ParticipationController {
   }
 
   @GetMapping("/all/{userId}")
-  public ResponseEntity<?> getAllParticipations(@PathVariable long id) {
-    return ResponseEntity.ok(participationService.getAllParticipationsOfUserId(id));
+  public ResponseEntity<?> getAllParticipations(@PathVariable long userId) {
+    return ResponseEntity.ok(participationService.getAllParticipationsOfUserId(userId));
   }
 
 }
