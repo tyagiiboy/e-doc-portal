@@ -61,8 +61,8 @@
 														"$ref": "AAAAAAGGlszq5y47MCA="
 													},
 													"font": "Arial;13;0",
-													"left": 40.72998046875,
-													"top": 21,
+													"left": 48.72998046875,
+													"top": 5,
 													"width": 145.5234375,
 													"height": 13,
 													"text": "AdminSequenceDiagram"
@@ -74,16 +74,15 @@
 														"$ref": "AAAAAAGGlszq5y47MCA="
 													},
 													"font": "Arial;13;1",
-													"left": 21,
-													"top": 21,
+													"left": 29,
+													"top": 5,
 													"width": 14.72998046875,
 													"height": 13,
 													"text": "sd"
 												}
 											],
 											"font": "Arial;13;0",
-											"left": 16,
-											"top": 16,
+											"left": 24,
 											"width": 817,
 											"height": 2169,
 											"nameLabel": {
