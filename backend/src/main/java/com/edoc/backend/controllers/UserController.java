@@ -15,12 +15,6 @@ public class UserController {
   @Autowired
   UserService userService;
 
-  @PostMapping("/register")
-  public ResponseEntity<?> registerUser(@RequestBody User user) {
-    userService.registerStudent(user);
-    return ResponseEntity.ok().build();
-  }
-
   @PostMapping("/update")
   public ResponseEntity<?> updateUser(@RequestBody UserDto old) {
     userService.updateProfile(old);

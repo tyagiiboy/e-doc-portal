@@ -40,11 +40,13 @@ public class ParticipationService {
     Event event = eventRepository.findById(eventId).orElseThrow();
     User student = userRepository.findByIdAndRole(id, Role.STUDENT).orElseThrow();
 
-    Admission latestAdmissionForStudent = (Admission) student
-        .getAdmissionList()
-        .stream()
-        .sorted()
-        .toArray()[0];
+//    Admission latestAdmissionForStudent = (Admission) student
+//        .getAdmissionList()
+//        .stream()
+//        .sorted()
+//        .toArray()[0];
+
+    Admission latestAdmissionForStudent = admissionRepository.findTopByUserIdOrderByAdmissionIdDesc(id).orElseThrow();
 
     latestAdmissionForStudent
         .getParticipations()
@@ -64,6 +66,8 @@ public class ParticipationService {
         .stream()
         .sorted()
         .toArray()[0];
+
+//    Admission admission = admissionRepository.findTopByUserIdDesc(userId).orElseThrow();
 
     admission
         .getParticipations()

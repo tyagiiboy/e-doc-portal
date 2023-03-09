@@ -71,7 +71,8 @@ public class User implements Serializable {
 	private String username;
 
 	@JsonProperty(access = Access.WRITE_ONLY)
-	@Length(min = 8, max = 20)
+//	@Length(min = 8)
+	@Column(columnDefinition = "text")
 	@ToString.Exclude
 	private String password;
 	

@@ -1,5 +1,6 @@
 package com.edoc.backend.controllers;
 
+import com.edoc.backend.dto.ApiResponse;
 import com.edoc.backend.entities.Event;
 import com.edoc.backend.services.EventService;
 import com.edoc.backend.services.ParticipationService;
@@ -28,7 +29,11 @@ public class EventController {
 
   @DeleteMapping("/delete/{id}")
   public ResponseEntity<?> deleteEvent(@PathVariable long id) {
-    return ResponseEntity.ok(eventService.deleteEventById(id));
+    return ResponseEntity.ok(
+        ApiResponse.builder()
+            .message("Event deleted: " + eventService.deleteEventById(id).getEventName())
+            .build()
+    );
   }
 
   @PostMapping("/create/{diseCode}")

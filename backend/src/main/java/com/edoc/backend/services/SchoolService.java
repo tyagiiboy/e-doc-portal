@@ -1,6 +1,5 @@
 package com.edoc.backend.services;
 
-import com.edoc.backend.dto.ResponseMessage;
 import com.edoc.backend.dto.SchoolDto;
 import com.edoc.backend.dto.StudentDto;
 import com.edoc.backend.entities.School;
@@ -9,6 +8,7 @@ import com.edoc.backend.repositories.UserRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -22,7 +22,8 @@ import java.util.stream.Collectors;
 @Transactional
 @SuppressWarnings("unused")
 public class SchoolService {
-
+  @Autowired
+  private PasswordEncoder enc;
   @Autowired
   private UserRepository userRepository;
   @Autowired
@@ -30,11 +31,8 @@ public class SchoolService {
   @Autowired
   private SchoolRepository schoolRepository;
 
-  public ResponseMessage countOfSchools() {
-    return ResponseMessage.builder()
-        .message("Stats")
-        .obj(schoolRepository.count())
-        .build();
+  public Long countOfSchools() {
+    return schoolRepository.count();
   }
 
   public List<SchoolDto> getSchoolListByAuthorizationStatus(boolean status) {
@@ -61,6 +59,7 @@ public class SchoolService {
 
   @Modifying
   public SchoolDto createSchool(School school) {
+    school.setPassword(enc.encode(school.getPassword()));
     schoolRepository.findById(school.getDiseCode());
     school.setAuthorizationStatus(false);
     return mapper.map(schoolRepository.save(school), SchoolDto.class);

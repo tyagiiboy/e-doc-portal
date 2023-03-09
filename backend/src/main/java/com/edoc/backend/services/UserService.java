@@ -6,6 +6,7 @@ import com.edoc.backend.repositories.UserRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -23,9 +24,19 @@ public class UserService {
   @Autowired
   private ModelMapper mapper;
 
+  @Autowired
+  private PasswordEncoder enc;
+
   @Modifying
   public void registerStudent(User user) {
     userRepository.save(user);
+  }
+
+  @Modifying
+  public UserDto createUser(User user) {
+    user.setPassword(enc.encode(user.getPassword()));
+    System.out.println("encoded: " + user.getPassword());
+    return mapper.map(userRepository.save(user), UserDto.class);
   }
 
   public UserDto getProfileById(Long id) {

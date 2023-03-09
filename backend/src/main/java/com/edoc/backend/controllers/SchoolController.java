@@ -46,12 +46,6 @@ public class SchoolController {
     return ResponseEntity.status(HttpStatus.valueOf(500)).build();
   }
 
-  @PostMapping("/create")
-  public ResponseEntity<?> createSchool(@RequestBody School school) {
-    SchoolDto schoolDto = schoolService.createSchool(school);
-    return ResponseEntity.ok(schoolDto);
-  }
-
   @PostMapping("/remove/student")
   public ResponseEntity<?> removeFromSchool(@RequestBody List<StudentDto> students) {
     if (schoolService.removeStudentsInList(students)) return ResponseEntity.ok().build();

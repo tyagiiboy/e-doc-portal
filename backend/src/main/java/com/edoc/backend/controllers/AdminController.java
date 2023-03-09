@@ -1,5 +1,6 @@
 package com.edoc.backend.controllers;
 
+import com.edoc.backend.dto.ApiResponse;
 import com.edoc.backend.services.SchoolService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +19,11 @@ public class AdminController {
 
     @GetMapping("/stats")
     public ResponseEntity<?> getStats() {
-        return ResponseEntity.ok(adminService.countOfSchools());
+        return ResponseEntity.ok(
+            ApiResponse.builder()
+                .message("Total: " + schoolService.countOfSchools())
+                .build()
+        );
     }
 
 }

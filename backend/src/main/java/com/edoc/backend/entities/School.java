@@ -75,8 +75,9 @@ public class School implements Serializable {
   private String username;
 
   @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-  @Length(min = 8, max = 20)
+//  @Length(min = 8)
   @ToString.Exclude
+  @Column(columnDefinition = "text")
   @EqualsAndHashCode.Exclude
   private String password;
 
