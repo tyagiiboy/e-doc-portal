@@ -1,7 +1,6 @@
 package com.edoc.backend.controllers;
 
 import com.edoc.backend.dto.UserDto;
-import com.edoc.backend.entities.User;
 import com.edoc.backend.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
