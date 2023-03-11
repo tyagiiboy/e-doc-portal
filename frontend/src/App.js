@@ -1,23 +1,18 @@
-import logo from './logo.svg';
-import './App.css';
-
+import Container from "./containers/Container";
+import Header from "./containers/Header";
+import SuccessToast from "./components/SuccessToast";
+import { useState } from "react";
 function App() {
+
+  const [messageToast, setMessageToast] = useState({status: false, message: ""})
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="App min-h-screen bg-slate-50 dark:bg-black dark:text-white">
+      <Header />
+      <Container setMessageToast={setMessageToast}  />
+      <SuccessToast 
+        messageToast={messageToast}
+        setMessageToast={setMessageToast}/>
     </div>
   );
 }

@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/auth")
 @SuppressWarnings("unused")
-public class SinInSignUpController {
+public class SignInSignUpController {
   @Autowired
   private JwtUtils jwtUtils;
 
