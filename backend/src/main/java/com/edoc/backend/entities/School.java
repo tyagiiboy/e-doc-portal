@@ -7,6 +7,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.util.Date;
@@ -46,7 +47,7 @@ public class School implements Serializable {
   @Length(min = 10, max = 100)
   private String address;
 
-  @Column(name = "co_Ed")
+  @Column(columnDefinition = "tinyint(1) default 1")
   @EqualsAndHashCode.Exclude
   private Boolean coEd;
 
@@ -73,6 +74,9 @@ public class School implements Serializable {
 
   @Length(min = 5, max = 20)
   private String username;
+
+  @Email(message="invalid email format!!!!!!!!")
+  private String email;
 
   @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 //  @Length(min = 8)

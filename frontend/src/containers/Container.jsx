@@ -8,12 +8,13 @@ import {BrowserRouter, Route, Routes} from 'react-router-dom';
 
 const Container = (props) => {
   return (
-    <div className='container max-w-4xl border-dashed border-2 border-black dark:border-white mx-auto max-h-full'>
+    <div className='max-w-4xl border-dashed border-2 border-black dark:border-white mx-auto min-h-screen'>
       
     <BrowserRouter>
       <Routes>
         <Route path='/' element={<Login/>}/>
         <Route path='/register' element={<RegisterUser setMessageToast={props.setMessageToast} />} />
+        <Route path='/school' element={<RegisterSchool setMessageToast={props.setMessageToast}/>} />
       </Routes>
     </BrowserRouter>
       {/* <Login />

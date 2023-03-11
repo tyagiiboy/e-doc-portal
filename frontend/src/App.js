@@ -1,7 +1,11 @@
 import Container from "./containers/Container";
 import Header from "./containers/Header";
 import SuccessToast from "./components/SuccessToast";
+import Footer from "./containers/Footer";
+
 import { useState } from "react";
+
+
 function App() {
 
   const [messageToast, setMessageToast] = useState({status: false, message: ""})
@@ -13,6 +17,7 @@ function App() {
       <SuccessToast 
         messageToast={messageToast}
         setMessageToast={setMessageToast}/>
+      <Footer />
     </div>
   );
 }
