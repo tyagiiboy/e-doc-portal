@@ -38,7 +38,7 @@ public class ParticipationService {
 
   public void addParticipationOfUserIdToEventId(long eventId, long id) {
     Event event = eventRepository.findById(eventId).orElseThrow();
-    User student = userRepository.findByIdAndRole(id, Role.STUDENT).orElseThrow();
+    User student = userRepository.findByIdAndRole(id, Role.ROLE_SCHOOL).orElseThrow();
 
 //    Admission latestAdmissionForStudent = (Admission) student
 //        .getAdmissionList()

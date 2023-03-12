@@ -1,7 +1,9 @@
 package com.edoc.backend.enums;
 
+@SuppressWarnings("unused")
 public enum Role {
-		STUDENT,
-		SCHOOL,
-		MANAGEMENT;
+  ROLE_SCHOOL,
+  ROLE_ADMIN,
+  ROLE_MANAGEMENT,
+  ROLE_STUDENT
 }

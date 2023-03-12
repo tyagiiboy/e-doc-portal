@@ -33,7 +33,7 @@ public class CustomUserDetailsService implements UserDetailsService {
       User user = userRepository
           .findByUsername(username)
           .orElseThrow(() -> new UsernameNotFoundException("Credentials error"));
-
+      System.out.println("user: " + user);
       return new CustomUserDetails(
           AuthRequest.builder()
               .role(user.getRole())
@@ -44,16 +44,18 @@ public class CustomUserDetailsService implements UserDetailsService {
       );
 
     } catch (UsernameNotFoundException ex) {
-
+      ex.printStackTrace();
     }
 
     School school = schoolRepository
         .findByUsername(username)
         .orElseThrow(() -> new UsernameNotFoundException("Credentials error"));
 
+    System.out.println("in user details service: " + school);
+
     return new CustomUserDetails(
         AuthRequest.builder()
-            .role(Role.SCHOOL)
+            .role(Role.ROLE_ADMIN)
             .id(school.getDiseCode())
             .password(school.getPassword())
             .username(school.getUsername())

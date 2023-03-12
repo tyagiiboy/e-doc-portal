@@ -38,10 +38,10 @@ public class EventController {
 
   @PostMapping("/create/{diseCode}")
   public ResponseEntity<?> creteEvent(@RequestBody Event event, @PathVariable long diseCode) {
+    System.out.println(event);
     eventService.createEvent(event, diseCode);
     return ResponseEntity.ok().build();
   }
-
 
   @GetMapping("/participants/{eventId}")
   public ResponseEntity<?> getParticipants(@PathVariable Long eventId) {

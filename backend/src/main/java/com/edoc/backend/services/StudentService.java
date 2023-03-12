@@ -39,7 +39,7 @@ public class StudentService {
 
   public List<StudentDto> getStudents() {
     List<StudentDto> students = new ArrayList<>();
-    userRepository.findByRole(Role.STUDENT).forEach(user -> students.add(
+    userRepository.findByRole(Role.ROLE_SCHOOL).forEach(user -> students.add(
         StudentDto.builder()
             .id(user.getId())
             .email(user.getEmail())
@@ -65,7 +65,7 @@ public class StudentService {
         .getUserList()
         .stream()
         .filter(
-            user -> user.getRole().equals(Role.STUDENT)
+            user -> user.getRole().equals(Role.ROLE_SCHOOL)
         ).forEach(
             user -> studentDtos.add(mapper.map(user, StudentDto.class))
         );

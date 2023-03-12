@@ -55,6 +55,7 @@ public class WebSecurityConfig {
         // only required for JS clnts (react / angular) : for the pre flight requests
         .antMatchers(HttpMethod.OPTIONS, "/school/**").hasRole("SCHOOL")
         .antMatchers(HttpMethod.OPTIONS, "/student/**").hasRole("STUDENT")
+//        .antMatchers(HttpMethod.OPTIONS, "/event/**").permitAll()
         .anyRequest().authenticated()
         .and()
         .sessionManagement()

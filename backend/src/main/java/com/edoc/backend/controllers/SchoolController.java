@@ -2,7 +2,6 @@ package com.edoc.backend.controllers;
 
 import com.edoc.backend.dto.SchoolDto;
 import com.edoc.backend.dto.StudentDto;
-import com.edoc.backend.entities.School;
 import com.edoc.backend.services.SchoolService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.Modifying;
