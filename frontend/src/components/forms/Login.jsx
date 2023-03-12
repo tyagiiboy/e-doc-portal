@@ -1,13 +1,71 @@
 import React from 'react'
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux';
+import authenticationService from '../../service/authentication.service';
+import { setCurrentUser } from '../../store/actions/user';
+import store from '../../store';
+import { Role } from '../../model/Role';
+import AuthRequest from '../../model/AuthRequest';
 
 
 const Login = () => {
-  const submitHandler = (event) => {
-    event.preventDefault()
-  }
 
-  const history = useNavigate();
+  const [user, setUser] = useState(new AuthRequest());
+    const [loading, setLoading] = useState(false);
+    const [submitted, setSubmitted] = useState(false);
+    const [errorMessage, setErrorMessage] = useState('');
+
+    const currentUser = useSelector(state => state.user);
+
+    const navigate = useNavigate();  
+
+    const dispatch = useDispatch();
+
+
+
+    const handleChange = (e) => {
+        const {name, value} = e.target;
+
+        setUser((prevState => {
+         //   console.log("in change "+name+" "+value);
+            //e.g: prevState ({user: x, pass: x}) + newKeyValue ({user: xy}) => ({user: xy, pass: x})
+            return {
+                ...prevState,
+                [name]: value
+            };
+        }));
+    };
+
+    const submitHandler = (e) => {
+      e.preventDefault();
+
+      setSubmitted(true);
+   //     console.log("in handle login "+user.email+" "+user.password);
+      if (!user.username || !user.password) {
+          return;
+      }
+
+      setLoading(true);
+      console.log("email "+user.username+" pwd "+user.password);
+      authenticationService.login(user).then(response => {
+          console.log("login success "+response.data.username)
+          //set user in session.
+          dispatch(setCurrentUser(response.data));
+        //  console.log("after dispatch");
+        if(store.getState().user.role === Role.STUDENT)
+          navigate('/register');
+          else
+          navigate('/admin');
+      }).catch(error => {
+         console.log(error);
+         setErrorMessage('email or password is not valid.');
+         setLoading(false);
+      });
+    };
+
+  
+
   return (
     <div className='p-20'>
       <form onSubmit={submitHandler}>
@@ -15,12 +73,12 @@ const Login = () => {
         <p className='dark:text-white text-3xl mb-11'>Login</p>
 
         <div class="relative z-0 w-full mb-6 group">
-          <input type="text" name="floating_username" id="floating_username" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
+          <input onChange={handleChange} type="text" name="username" id="floating_username" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
           <label for="floating_username" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Username</label>
         </div>
 
         <div class="relative z-0 w-full mb-6 group">
-          <input type="password" name="floating_password" id="floating_password" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
+          <input onChange={handleChange} type="password" name="password" id="floating_password" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
           <label for="floating_password" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Password</label>
         </div>
 

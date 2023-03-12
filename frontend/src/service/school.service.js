@@ -6,5 +6,5 @@ class SchoolService {
     return axios.post(REGISTER_SCHOOL_URL, school);
   }
 }
-
-export default new SchoolService();
+const schoolService = new SchoolService();
+export default schoolService;
