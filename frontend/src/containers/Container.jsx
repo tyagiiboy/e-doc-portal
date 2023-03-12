@@ -2,7 +2,7 @@ import React from 'react'
 import Login from '../components/forms/Login'
 import RegisterSchool from '../components/forms/RegisterSchool'
 import RegisterUser from '../components/forms/RegisterUser'
-// import Modal from '../components/Modal'
+import Profile from '../components/Profile'
 
 import {BrowserRouter, Route, Routes} from 'react-router-dom';
 
@@ -15,12 +15,10 @@ const Container = (props) => {
         <Route path='/' element={<Login/>}/>
         <Route path='/register' element={<RegisterUser setMessageToast={props.setMessageToast} />} />
         <Route path='/school' element={<RegisterSchool setMessageToast={props.setMessageToast}/>} />
+        <Route path='/profile' element={<Profile />} />
       </Routes>
     </BrowserRouter>
-      {/* <Login />
-      <RegisterUser />
-      <RegisterSchool />
-      <Modal /> */}
+      
     </div>
   )
 }

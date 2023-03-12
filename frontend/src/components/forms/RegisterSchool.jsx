@@ -29,7 +29,7 @@ const RegisterSchool = (props) => {
 
   return (
     <div class='p-20'>
-      <p class='dark:text-white text-3xl mb-11'>School Details</p>
+      <p class='dark:text-white text-3xl mb-11'>Organization Details</p>
       <form onSubmit={submitHandler}>
         <div class="grid md:grid-cols-2 md:gap-6">
           <div class="relative z-0 w-full mb-6 group">
