@@ -10,7 +10,7 @@ const Header = () => {
   }
 
   return (
-    <header className='bg-teal-700 h-12 sticky top-0 z-20 mb-3 p-1'>
+    <header className='bg-teal-700 h-12 sticky top-0 z-20 p-1'>
       <section className='max-w-4xl  mx-auto flex justify-between'>
         <h1 className='text-white text-3xl'>📜 E-DOC</h1>
         <nav className="">
