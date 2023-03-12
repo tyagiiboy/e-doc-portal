@@ -9,6 +9,7 @@ import lombok.*;
 @Builder
 @ToString
 public class AuthRequest {
+  Long id;
   String username;
   String password;
   Role role;

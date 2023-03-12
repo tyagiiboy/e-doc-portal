@@ -37,6 +37,7 @@ public class CustomUserDetailsService implements UserDetailsService {
       return new CustomUserDetails(
           AuthRequest.builder()
               .role(user.getRole())
+              .id(user.getId())
               .password(user.getPassword())
               .username(user.getUsername())
               .build()
@@ -53,6 +54,7 @@ public class CustomUserDetailsService implements UserDetailsService {
     return new CustomUserDetails(
         AuthRequest.builder()
             .role(Role.SCHOOL)
+            .id(school.getDiseCode())
             .password(school.getPassword())
             .username(school.getUsername())
             .build()

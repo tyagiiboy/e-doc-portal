@@ -40,19 +40,23 @@ public class SignInSignUpController {
   private UserService userService;
 
   @PostMapping("/signin")
-  public ResponseEntity<?> validateCredentials(@RequestBody AuthRequest authRequest) {
+  public ResponseEntity<?> validateCredentials(@RequestBody AuthRequest req) {
     UsernamePasswordAuthenticationToken authenticationToken =
         new UsernamePasswordAuthenticationToken(
-            authRequest.getUsername(), authRequest.getPassword()
+            req.getUsername(), req.getPassword()
         );
 
-    System.out.println(authRequest);
+    System.out.println(req);
 
     Authentication authentication = authenticationManager.authenticate(authenticationToken);
     CustomUserDetails customUserDetails = (CustomUserDetails) authentication.getPrincipal();
-    AuthRequest authRequest1 = customUserDetails.getUser();
-    AuthResponse authResponse = new AuthResponse();
-    authResponse.setToken(jwtUtils.generateJwtToken(authentication));
+    AuthRequest authRequest = customUserDetails.getUser();
+    AuthResponse authResponse = AuthResponse.builder()
+        .token(jwtUtils.generateJwtToken(authentication))
+        .id(authRequest.getId())
+        .username(authRequest.getUsername())
+        .role(authRequest.getRole())
+        .build();
     return ResponseEntity.ok(authResponse);
   }
 
