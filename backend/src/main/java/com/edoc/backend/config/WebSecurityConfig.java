@@ -4,7 +4,6 @@ import com.edoc.backend.filters.JWTRequestFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -50,12 +49,11 @@ public class WebSecurityConfig {
         .authorizeRequests()
         // for sign in , sign up , swagger : permit all
         .antMatchers("/auth/**", "/swagger*/**", "/v*/api-docs/**").permitAll()
-        .antMatchers("/**").hasRole("ADMIN")
-        .antMatchers(HttpMethod.OPTIONS).permitAll()
         // only required for JS clnts (react / angular) : for the pre flight requests
-        .antMatchers(HttpMethod.OPTIONS, "/school/**").hasRole("SCHOOL")
-        .antMatchers(HttpMethod.OPTIONS, "/student/**").hasRole("STUDENT")
-//        .antMatchers(HttpMethod.OPTIONS, "/event/**").permitAll()
+//        .antMatchers(HttpMethod.OPTIONS).permitAll()
+        .antMatchers("/**").hasRole("ADMIN")
+        .antMatchers("/school/**").hasRole("SCHOOL")
+        .antMatchers("/student/**").hasRole("STUDENT")
         .anyRequest().authenticated()
         .and()
         .sessionManagement()

@@ -32,5 +32,6 @@ public class Certificate implements Serializable {
   @ManyToOne
   @JoinColumn(name = "admission_no")
   @EqualsAndHashCode.Exclude
+  @ToString.Exclude
   private Admission admission;
 }

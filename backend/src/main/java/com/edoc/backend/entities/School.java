@@ -90,18 +90,22 @@ public class School implements Serializable {
    */
   @OneToMany(cascade = CascadeType.ALL, mappedBy = "school")
   @EqualsAndHashCode.Exclude
+  @ToString.Exclude
   private Set<User> userList = new HashSet<>();
 
   @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "organizer")
   @EqualsAndHashCode.Exclude
+  @ToString.Exclude
   private Set<Event> eventList = new HashSet<>();
 
   @OneToMany(cascade = CascadeType.ALL, mappedBy = "school")
   @EqualsAndHashCode.Exclude
+  @ToString.Exclude
   private Set<Admission> admissionList = new HashSet<>();
 
   @OneToMany(mappedBy = "respondant", cascade = CascadeType.ALL, orphanRemoval = true)
   @EqualsAndHashCode.Exclude
+  @ToString.Exclude
   private Set<Transfer> pendingTransfers = new HashSet<>();
 
 }

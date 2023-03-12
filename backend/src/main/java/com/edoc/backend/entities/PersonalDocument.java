@@ -42,5 +42,6 @@ public class PersonalDocument implements Serializable {
   @OneToOne
   @JoinColumn(name = "owner_id")
   @EqualsAndHashCode.Exclude
+  @ToString.Exclude
   private User user;
 }

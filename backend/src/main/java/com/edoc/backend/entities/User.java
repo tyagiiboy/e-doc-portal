@@ -109,15 +109,18 @@ public class User implements Serializable {
 	 */
 	@ManyToOne
 	@JoinColumn(name="school_dise_code")
+	@ToString.Exclude
 	private School school;
 	
 //	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
 //	private PersonalDocument presonalDocument;
 	
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+	@ToString.Exclude
 	private Set<Admission> admissionList = new HashSet<>();
 
 	@OneToOne(mappedBy = "user")
+	@ToString.Exclude
 	private Transfer transferRequest;
 	
 }

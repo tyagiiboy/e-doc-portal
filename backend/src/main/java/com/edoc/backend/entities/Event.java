@@ -48,11 +48,13 @@ public class Event implements Serializable {
 
 	@ManyToMany(mappedBy = "participations")
 	@EqualsAndHashCode.Exclude
+	@ToString.Exclude
 	private Set<Admission> participants = new HashSet<>();
 
 	@ManyToOne
 	@JoinColumn(name = "school_id")
 	@EqualsAndHashCode.Exclude
+	@ToString.Exclude
 	private School organizer;
 
 }
