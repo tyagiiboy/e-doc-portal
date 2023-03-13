@@ -6,13 +6,13 @@ import { useState } from "react";
 
 
 function App() {
-
+  const [navMenuState, setNavMenuState] = useState(false)
   const [messageToast, setMessageToast] = useState({status: false, message: ""})
 
   return (
     <div className="App min-h-screen bg-slate-50 dark:bg-black dark:text-white pb-1">
-      <Header />
-      <Container setMessageToast={setMessageToast}  />
+      <Header navMenuState={navMenuState} setNavMenuState={setNavMenuState} />
+      <Container setMessageToast={setMessageToast} navMenuState={navMenuState} setNavMenuState={setNavMenuState} />
       <SuccessToast messageToast={messageToast} setMessageToast={setMessageToast}/>
     </div>
   );

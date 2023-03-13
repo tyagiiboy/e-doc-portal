@@ -67,6 +67,7 @@ public class SignInSignUpController {
 
   @PostMapping("/signup/user")
   public ResponseEntity<?> registerUser(@RequestBody User user) {
+    System.out.println("In regiser User" + user);
     return ResponseEntity.status(HttpStatus.CREATED).body(userService.createUser(user));
   }
 }

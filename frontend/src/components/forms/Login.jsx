@@ -9,65 +9,67 @@ import { Role } from '../../model/Role';
 import AuthRequest from '../../model/AuthRequest';
 
 
-const Login = () => {
+const Login = (props) => {
 
   const [user, setUser] = useState(new AuthRequest());
-    const [loading, setLoading] = useState(false);
-    const [submitted, setSubmitted] = useState(false);
-    const [errorMessage, setErrorMessage] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
 
-    const currentUser = useSelector(state => state.user);
+  const currentUser = useSelector(state => state.user);
 
-    const navigate = useNavigate();  
+  const navigate = useNavigate();
 
-    const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
+  const handleChange = (e) => {
+    const { name, value } = e.target;
 
+    setUser((prevState => {
+      //   console.log("in change "+name+" "+value);
+      //e.g: prevState ({user: x, pass: x}) + newKeyValue ({user: xy}) => ({user: xy, pass: x})
+      return {
+        ...prevState,
+        [name]: value
+      };
+    }));
+  };
 
-    const handleChange = (e) => {
-        const {name, value} = e.target;
+  const submitHandler = (e) => {
+    e.preventDefault();
 
-        setUser((prevState => {
-         //   console.log("in change "+name+" "+value);
-            //e.g: prevState ({user: x, pass: x}) + newKeyValue ({user: xy}) => ({user: xy, pass: x})
-            return {
-                ...prevState,
-                [name]: value
-            };
-        }));
-    };
+    setSubmitted(true);
+    //     console.log("in handle login "+user.email+" "+user.password);
+    if (!user.username || !user.password) {
+      return;
+    }
 
-    const submitHandler = (e) => {
-      e.preventDefault();
+    setLoading(true);
+    console.log("email " + user.username + " pwd " + user.password);
+    authenticationService.login(user).then(response => {
+      console.log("login success " + response.data.username)
 
-      setSubmitted(true);
-   //     console.log("in handle login "+user.email+" "+user.password);
-      if (!user.username || !user.password) {
-          return;
-      }
+      props.setNavMenuState(navMenuState => !navMenuState)
 
-      setLoading(true);
-      console.log("email "+user.username+" pwd "+user.password);
-      authenticationService.login(user).then(response => {
-          console.log("login success "+response.data.username)
-          //set user in session.
-          dispatch(setCurrentUser(response.data));
-        //  console.log("after dispatch");
-        if(store.getState().user.role === Role.STUDENT)
-          navigate('/register');
-          else
-          navigate('/admin');
-      }).catch(error => {
-         console.log(error);
-         setErrorMessage('email or password is not valid.');
-         setLoading(false);
-      });
-    };
-
-  
+      //set user in session.
+      dispatch(setCurrentUser(response.data));
+       console.log(store.getState() + ", " + store.getState().user);
+      if (store.getState().user.role === Role.STUDENT)
+        navigate('/');
+      else if (store.getState().role === Role.SCHOOL)
+        navigate('/');
+      else
+        navigate('/login')
+    }).catch(error => {
+      console.log(error);
+      setErrorMessage('email or password is not valid.');
+      setLoading(false);
+    });
+  };
 
   return (
     <div className='p-20'>
+      
       <form onSubmit={submitHandler}>
 
         <p className='dark:text-white text-3xl mb-11'>Login</p>
@@ -85,12 +87,12 @@ const Login = () => {
         <div class="flex justify-between">
           <button type="submit" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" >Login</button>
 
-          {/* <button type="button" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" onClick={() => { history('/register') }}>Sign Up</button> */}
-          <p>
+           <button type="button" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" onClick={() => { navigate('/register') }}>Sign Up</button> 
+          {/* <p>
             New User? &nbsp;
             <a href="/register" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Sign up</a>
             &nbsp; here.
-          </p>
+          </p> */}
         </div>
 
 

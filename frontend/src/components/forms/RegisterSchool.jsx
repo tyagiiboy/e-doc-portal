@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 import { useNavigate } from 'react-router-dom'
 import School from '../../model/School'
-import SchoolService from '../../service/school.service'
+import schoolService from '../../service/school.service'
 
 const RegisterSchool = (props) => {
   const history = useNavigate();
@@ -23,8 +23,8 @@ const RegisterSchool = (props) => {
     const setMessageToast = props.setMessageToast;
     setMessageToast({ status: true, message: "Registered" });
     school.coEd = (school.coEd === "true")? true: false;
-    SchoolService.saveSchool(school);
-    history('/');
+    schoolService.saveSchool(school);
+    history('/login');
   }
 
   return (

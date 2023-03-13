@@ -38,9 +38,12 @@ public class EventController {
 
   @PostMapping("/create/{diseCode}")
   public ResponseEntity<?> creteEvent(@RequestBody Event event, @PathVariable long diseCode) {
-    System.out.println(event);
-    eventService.createEvent(event, diseCode);
-    return ResponseEntity.ok().build();
+    return ResponseEntity.ok(eventService.createEvent(event, diseCode));
+  }
+
+  @GetMapping("/school/{diseCode}")
+  public ResponseEntity<?> getEventBySchool(@PathVariable long diseCode) {
+    return ResponseEntity.ok(eventService.getBySchool(diseCode));
   }
 
   @GetMapping("/participants/{eventId}")

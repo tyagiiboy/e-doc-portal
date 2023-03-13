@@ -17,21 +17,21 @@ export default class User {
     contactNo=null,
     role=null
   ) {
-    this.firstName = null;
-    this.lastName = null;
-    this.gender = null;
-    this.dateOfBirth = null;
-    this.aadharNumber = null;
-    this.email = null;
-    this.username = null;
-    this.password = null;
-    this.fatherName = null;
-    this.motherName = null;
-    this.category = null;
-    this.accountNumber = null;
-    this.address = null;
-    this.contactNo = null;
-    this.role = null;
+    this.firstName = firstName;
+    this.lastName = lastName;
+    this.gender = gender;
+    this.dateOfBirth = dateOfBirth;
+    this.aadharNumber = aadharNumber;
+    this.email = email;
+    this.username = username;
+    this.password = password;
+    this.fatherName = fatherName;
+    this.motherName = motherName;
+    this.category = category;
+    this.accountNumber = accountNumber;
+    this.address = address;
+    this.contactNo = contactNo;
+    this.role = role;
   }
 }
 

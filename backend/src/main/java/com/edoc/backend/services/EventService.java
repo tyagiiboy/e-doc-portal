@@ -20,6 +20,7 @@ import java.util.List;
 
 @Service
 @Transactional
+@SuppressWarnings("unused")
 public class EventService {
   @Autowired
   private EventRepository eventRepository;
@@ -99,6 +100,19 @@ public class EventService {
             mapper.map(admission.getUser(), UserDto.class)
         ));
     return users;
+  }
+
+  public List<EventDto> getBySchool(long diseCode) {
+    List<EventDto> events = new ArrayList<>();
+    eventRepository.findByOrganizerDiseCode(diseCode)
+        .forEach(
+            event -> {
+              EventDto dto = mapper.map(event, EventDto.class);
+              dto.setOrganizer(mapper.map(event.getOrganizer(), SchoolDto.class));
+              events.add(dto);
+            }
+        );
+    return events;
   }
 
 }

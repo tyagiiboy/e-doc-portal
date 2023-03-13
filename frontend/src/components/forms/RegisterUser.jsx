@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import User from '../../model/User'
-import UserService from '../../service/user.service'
+import userService from '../../service/user.service'
 
 const RegisterUser = (props) => {
   const [user, setUser] = useState(new User())
@@ -18,12 +18,21 @@ const RegisterUser = (props) => {
     });
   }
 
-  const submitHandler = (e) => {
+  const submitHandler = async (e) => {
     e.preventDefault()
     const setMessageToast = props.setMessageToast
     setMessageToast({ status: true, message: "Registered" })
-    UserService.saveUser(user)
-    history('/')
+    console.log(user)
+    try{
+      userService.saveUser(user).then(response => console.log(response.data));
+
+    }
+    catch(eror){
+console.log(eror)
+    }
+    // console.log(currentuser)
+     history('/login')
+    
   }
 
   return (

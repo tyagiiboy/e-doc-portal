@@ -3,6 +3,9 @@ import Login from '../components/forms/Login'
 import RegisterSchool from '../components/forms/RegisterSchool'
 import RegisterUser from '../components/forms/RegisterUser'
 import Profile from '../components/Profile'
+import EventPage from './EventPage'
+import HomePage from './HomePage'
+import EventForm from '../components/forms/EventForm'
 
 import {BrowserRouter, Route, Routes} from 'react-router-dom';
 
@@ -12,10 +15,13 @@ const Container = (props) => {
       
     <BrowserRouter>
       <Routes>
-        <Route path='/' element={<Login/>}/>
+        <Route path='/login' element={<Login navMenuState={props.navMenuState} setNavMenuState={props.setNavMenuState} />}/>
         <Route path='/register' element={<RegisterUser setMessageToast={props.setMessageToast} />} />
         <Route path='/school' element={<RegisterSchool setMessageToast={props.setMessageToast}/>} />
         <Route path='/profile' element={<Profile />} />
+        <Route path='/event' element={<EventPage />} />
+        <Route path='/' element={<HomePage />} />
+        <Route path='/newEvent' element={<EventForm />} />
       </Routes>
     </BrowserRouter>
       

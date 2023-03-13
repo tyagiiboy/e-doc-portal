@@ -32,7 +32,7 @@ public class UserService {
     userRepository.save(user);
   }
 
-  @Modifying
+
   public UserDto createUser(User user) {
     user.setPassword(enc.encode(user.getPassword()));
     System.out.println("encoded: " + user.getPassword());
