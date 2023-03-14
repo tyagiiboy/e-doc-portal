@@ -13,8 +13,10 @@ import com.edoc.backend.repositories.UserRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,14 +35,16 @@ public class EventService {
   @Autowired
   private ModelMapper mapper;
 
+  @Autowired
+  private ImageHandlingService imageHandlingService;
+
   public EventDto createEvent(Event event, long diseCode) {
     School school = schoolRepository.findById(diseCode).orElseThrow();
     school.getEventList().add(event);
     event.setOrganizer(school);
-    schoolRepository.save(school);
+    event = eventRepository.save(event);
 
     EventDto dto = mapper.map(event, EventDto.class);
-    System.out.println(dto.getOrganizer());
     dto.setOrganizer(mapper.map(school, SchoolDto.class));
     return dto;
   }
@@ -113,6 +117,17 @@ public class EventService {
             }
         );
     return events;
+  }
+
+  public void uploadEventImage(long id, MultipartFile image) throws IOException {
+    Event event = eventRepository.findById(id).orElseThrow();
+    event.setEventImage(imageHandlingService.uploadImage(id, image));
+    eventRepository.save(event);
+  }
+
+  public byte[] downloadEventImage(long id) throws IOException {
+    Event event = eventRepository.findById(id).orElseThrow();
+    return imageHandlingService.serveImage(event.getEventImage());
   }
 
 }

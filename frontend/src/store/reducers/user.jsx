@@ -1,4 +1,5 @@
 import { SET_CURRENT_USER, CLEAR_CURRENT_USER } from "../type";
+
 const userReducer = (state = {}, action) => {
   switch (action?.type) {
     case SET_CURRENT_USER:

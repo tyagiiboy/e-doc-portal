@@ -18,5 +18,7 @@ public class SchoolDto {
     private Level level;
     private boolean authorizationStatus;
     private boolean coEd;
+    private String email;
+    private String address;
 
 }

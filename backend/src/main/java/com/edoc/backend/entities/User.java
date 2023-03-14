@@ -43,7 +43,7 @@ public class User implements Serializable {
 	@Length(max = 20, message = "Invalid first name!!!!!!")
 	private String firstName;
 	
-	@Column(name="last_name", unique = true)
+	@Column(name="last_name")
 	@Length(max = 20, message = "Invalid last name!!!!!!")
 	private String lastName;
 	
@@ -60,6 +60,7 @@ public class User implements Serializable {
 	private Long aadharNumber;
 	
 	@Email(message="invalid email format!!!!!!!!")
+	@Column(unique = true, nullable = false)
 	private String email;
 	
 //	@NotBlank(message="Date of Joining can not be Empty")
@@ -67,7 +68,7 @@ public class User implements Serializable {
 	@CreationTimestamp
 	private Date dateOfRegistration;
 	
-	@Column(name="user_name")
+	@Column(name="user_name", unique = true, nullable = false)
 	private String username;
 
 	@JsonProperty(access = Access.WRITE_ONLY)
@@ -111,10 +112,12 @@ public class User implements Serializable {
 	@JoinColumn(name="school_dise_code")
 	@ToString.Exclude
 	private School school;
-	
-//	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-//	private PersonalDocument presonalDocument;
-	
+
+/*
+	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+	private PersonalDocument presonalDocument
+*/
+
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
 	@ToString.Exclude
 	private Set<Admission> admissionList = new HashSet<>();

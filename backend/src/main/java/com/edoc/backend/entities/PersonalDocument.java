@@ -21,7 +21,7 @@ public class PersonalDocument implements Serializable {
   private Integer documentId;
 
   @Column(name = "aadharcard_link", columnDefinition = "text")
-  private String aadharNummber;
+  private String aadhar;
 
   @Column(name = "incomecertificate_link", columnDefinition = "text")
   private String incomeCertificate;

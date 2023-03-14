@@ -21,18 +21,15 @@ const RegisterUser = (props) => {
   const submitHandler = async (e) => {
     e.preventDefault()
     const setMessageToast = props.setMessageToast
-    setMessageToast({ status: true, message: "Registered" })
-    console.log(user)
-    try{
+    try {
       userService.saveUser(user).then(response => console.log(response.data));
-
+      setMessageToast({ status: true, message: "Registered" })
+      history('/login')
     }
-    catch(eror){
-console.log(eror)
+    catch (eror) {
+      console.log(eror)
     }
     // console.log(currentuser)
-     history('/login')
-    
   }
 
   return (
@@ -145,8 +142,8 @@ console.log(eror)
             <label for="underline_select" class="sr-only">Underline select</label>
             <select onChange={onChangeHandler} id="underline_select" name='role' class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-200 appearance-none dark:text-gray-400 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer">
               <option disabled class='dark:bg-black dark:text-slate-400' selected>Who are you?</option>
-              <option class='dark:bg-black dark:hover:bg-slate-900 dark:text-slate-400' value="STUDENT">Student</option>
-              <option class='dark:bg-black dark:hover:bg-slate-900 dark:text-slate-400' value="MANAGEMENT">Management</option>
+              <option class='dark:bg-black dark:hover:bg-slate-900 dark:text-slate-400' value="ROLE_STUDENT">Student</option>
+              <option class='dark:bg-black dark:hover:bg-slate-900 dark:text-slate-400' value="ROLE_MANAGEMENT">Management</option>
             </select>
           </div>
         </div>

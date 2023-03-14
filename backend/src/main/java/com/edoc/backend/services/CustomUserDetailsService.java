@@ -55,7 +55,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     return new CustomUserDetails(
         AuthRequest.builder()
-            .role(Role.ROLE_ADMIN)
+            .role(Role.ROLE_SCHOOL)
             .id(school.getDiseCode())
             .password(school.getPassword())
             .username(school.getUsername())

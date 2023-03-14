@@ -76,6 +76,7 @@ public class School implements Serializable {
   private String username;
 
   @Email(message="invalid email format!!!!!!!!")
+  @Column(unique = true)
   private String email;
 
   @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)

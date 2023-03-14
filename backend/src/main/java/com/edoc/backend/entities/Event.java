@@ -32,18 +32,25 @@ public class Event implements Serializable {
 
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "start_date")
+	@EqualsAndHashCode.Exclude
 	private Date startDate;
 
 	@Column(name = "end_date")
 	@Temporal(TemporalType.TIMESTAMP)
+	@EqualsAndHashCode.Exclude
 	private Date endDate;
 
 	@Column(name = "last_date_of_enrollment")
 	@Temporal(TemporalType.TIMESTAMP)
+	@EqualsAndHashCode.Exclude
 	private Date lastDateOfEnrollment;
+
+	@Column(name = "event_image")
+	private String eventImage;
 
 	@Column(name = "announcement_date")
 	@CreationTimestamp
+	@EqualsAndHashCode.Exclude
 	private Date announcementDate;
 
 	@ManyToMany(mappedBy = "participations")

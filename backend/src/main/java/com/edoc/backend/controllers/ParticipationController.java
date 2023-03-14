@@ -5,8 +5,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.transaction.Transactional;
-
 @RestController
 @RequestMapping("/participation")
 @SuppressWarnings("unused")
@@ -16,7 +14,8 @@ public class ParticipationController {
 
   @PostMapping("/add/{eventid}/{userId}")
   public ResponseEntity<?> participate(@PathVariable Long eventid, @PathVariable Long userId) {
-    participationService.addParticipationOfUserIdToEventId(eventid, userId);
+    if(!participationService.addParticipationOfUserIdToEventId(eventid, userId))
+      return ResponseEntity.badRequest().build();
     return ResponseEntity.ok().build();
   }
 

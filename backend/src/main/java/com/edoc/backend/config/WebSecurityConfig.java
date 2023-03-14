@@ -52,9 +52,10 @@ public class WebSecurityConfig {
         .antMatchers("/auth/**", "/swagger*/**", "/v*/api-docs/**").permitAll()
         // only required for JS clnts (react / angular) : for the pre flight requests
         .antMatchers(HttpMethod.OPTIONS).permitAll()
-        .antMatchers("/**").hasRole("ADMIN")
-        .antMatchers("/school/**").hasRole("SCHOOL")
-        .antMatchers("/student/**").hasRole("STUDENT")
+//        .antMatchers("/**").hasRole("ADMIN")
+//        .antMatchers("/school/**").hasRole("SCHOOL")
+//        .antMatchers("/student/**").hasRole("STUDENT")
+        .antMatchers("/**").permitAll()
         .anyRequest().authenticated()
         .and()
         .sessionManagement()

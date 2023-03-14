@@ -11,6 +11,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @SuppressWarnings({"unused"})
@@ -39,5 +41,13 @@ public class ImageHandlingService {
 
   public byte[] serveImage(String path) throws IOException {
     return Files.readAllBytes(Paths.get(path));
+  }
+
+  public String[] uploadImages(Long id, MultipartFile[] documents) throws IOException {
+    List<String> paths = new ArrayList<>();
+    for (MultipartFile file : documents) {
+      paths.add(uploadImage(id, file));
+    }
+    return (String[]) paths.toArray();
   }
 }

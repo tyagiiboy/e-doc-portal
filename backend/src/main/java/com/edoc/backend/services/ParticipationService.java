@@ -36,17 +36,16 @@ public class ParticipationService {
   private AdmissionRepository admissionRepository;
 
 
-  public void addParticipationOfUserIdToEventId(long eventId, long id) {
+  public boolean addParticipationOfUserIdToEventId(long eventId, long id) {
     Event event = eventRepository.findById(eventId).orElseThrow();
+
     User student = userRepository.findByIdAndRole(id, Role.ROLE_SCHOOL).orElseThrow();
 
-//    Admission latestAdmissionForStudent = (Admission) student
-//        .getAdmissionList()
-//        .stream()
-//        .sorted()
-//        .toArray()[0];
+    if (student.getSchool() == null) return false;
 
     Admission latestAdmissionForStudent = admissionRepository.findTopByUserIdOrderByAdmissionIdDesc(id).orElseThrow();
+
+    if (latestAdmissionForStudent.getParticipations().contains(event)) return false;
 
     latestAdmissionForStudent
         .getParticipations()
@@ -56,6 +55,7 @@ public class ParticipationService {
         .add(latestAdmissionForStudent);
 
     eventRepository.save(event);
+    return true;
   }
 
   public void removeParticipationOfUserIdFromEventId(long eventId, long userId) {
@@ -66,8 +66,6 @@ public class ParticipationService {
         .stream()
         .sorted()
         .toArray()[0];
-
-//    Admission admission = admissionRepository.findTopByUserIdDesc(userId).orElseThrow();
 
     admission
         .getParticipations()
@@ -80,6 +78,10 @@ public class ParticipationService {
   }
 
   public Map<Long, List<EventDto>> getAllParticipationsOfUserId(long userId) {
+    User user = userRepository.findById(userId).orElseThrow();
+    if (!user.getRole().equals(Role.ROLE_STUDENT))
+      throw new RuntimeException("Invalid Role for requested uri!");
+
     List<Admission> admissionList = admissionRepository.findByUserId(userId);
     HashMap<Long, List<EventDto>> admissionsAndParticipations = new HashMap<>();
 
